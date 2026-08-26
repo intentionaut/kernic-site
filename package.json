@@ -13,8 +13,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.2.7",
-    "kernic": "file:../kernic"
+    "astro": "^7.2.7"
   },
   "allowScripts": {
     "esbuild": true

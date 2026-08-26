@@ -5,7 +5,7 @@ import Footer from '../components/Footer.astro';
 import Terminal from '../components/Terminal.astro';
 import CodeBlock from '../components/CodeBlock.astro';
 import { readFileSync } from 'node:fs';
-import { VIBES } from 'kernic/dist/vibes.js';
+import { VIBES } from '../data/vibes';
 import tokensCss from '../styles/tokens.css?raw';
 import tailwindOut from '../generated/tailwind.css?raw';
 import jsonOut from '../generated/tokens.json?raw';
@@ -78,10 +78,10 @@ const vibeData = VIBES.map((v) => ({
   description: v.description,
   primarySeed: v.primarySeed,
   accentSeed: v.accentSeed,
-  dark: v.darkModeDefault,
+  dark: v.dark,
   radiusPx: radiusStart[v.radius],
-  headingFont: v.fonts.heading,
-  bodyFont: v.fonts.body,
+  headingFont: v.headingFont,
+  bodyFont: v.bodyFont,
 }));
 
 const features = [
