@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 04 · Baseline Shift — one K, cut at the waist, lower half nudged
+       along the baseline. A typesetting operation drawn into the mark;
+       dashed guide line nods to design tools. -->
+  <defs>
+    <clipPath id="top"><rect x="0" y="0" width="64" height="32"/></clipPath>
+    <clipPath id="bottom"><rect x="0" y="32" width="64" height="32"/></clipPath>
+  </defs>
+  <path id="k" d="M13 9 h11 v18.5 l14 -18.5 h11 l-16.5 23 l16.5 23 h-11 l-14 -19 v19 h-11 z"
+        fill="#0c3185" clip-path="url(#top)"/>
+  <use href="#k" transform="translate(6 0)" clip-path="url(#bottom)"/>
+  <line x1="2" y1="32" x2="62" y2="32" stroke="#45ace7" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>

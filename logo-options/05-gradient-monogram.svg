@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 05 · Monogram — app-tile forward. Brand gradient field,
+       paper-white custom K with generous margins.
+       The most product-company of the set. -->
+  <defs>
+    <linearGradient id="field" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#45ace7"/>
+      <stop offset="0.52" stop-color="#3a79ff"/>
+      <stop offset="1" stop-color="#0c3185"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#field)"/>
+  <g fill="#ffffff">
+    <rect x="17" y="14" width="9" height="36" rx="1"/>
+    <path d="M28 34 L43 14 L50 14 L35 37 Z"/>
+    <path d="M35 27 L50 50 L43 50 L28 30 Z"/>
+  </g>
+</svg>

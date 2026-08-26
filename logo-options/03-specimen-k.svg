@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 03 · Specimen — a glyph card from a type editor: cap height,
+       x-height and baseline guides framing a solid K.
+       Reads "we know type" without saying it. -->
+  <g stroke="#b3c0c7" stroke-width="1.5">
+    <line x1="3" y1="12" x2="61" y2="12"/>
+    <line x1="3" y1="24" x2="61" y2="24" opacity="0.45"/>
+  </g>
+  <g fill="#0e1518">
+    <rect x="23" y="12" width="7" height="40"/>
+    <path d="M32 35 L45 12 L52 12 L37 39 Z"/>
+    <path d="M37 25 L52 52 L45 52 L32 29 Z"/>
+  </g>
+  <line x1="3" y1="52" x2="61" y2="52" stroke="#455259" stroke-width="2"/>
+</svg>

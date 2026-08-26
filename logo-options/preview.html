@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kernic · logo options</title>
+<style>
+  @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
+  :root {
+    --paper: #f0f8fd;
+    --ink: #0e1518;
+    --navy: #0c3185;
+    --muted-l: #5d6c73;
+    --muted-d: #96a4ac;
+    --border-l: #ced9df;
+    --border-d: #323c42;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 48px 40px 80px;
+  }
+  .page-head { max-width: 1080px; margin: 0 auto 40px; }
+  h1 { font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; }
+  .page-head p { color: var(--muted-l); margin-top: 8px; max-width: 60ch; line-height: 1.55; }
+
+  .grid {
+    max-width: 1080px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 20px;
+  }
+  section.dark {
+    margin-top: 56px; background: var(--ink); border-radius: 16px;
+    padding: 40px; 
+  }
+  section.dark h2, section.light-label h2 {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; font-weight: 500;
+    text-transform: uppercase; letter-spacing: 0.16em; margin-bottom: 20px;
+  }
+  section.dark { color: var(--paper); }
+  section.dark h2 { color: var(--muted-d); }
+  section.light-label { max-width: 1080px; margin: 48px auto 0; }
+  section.light-label h2 { color: var(--muted-l); }
+
+  .card {
+    background: #fff; border: 1px solid var(--border-l); border-radius: 14px;
+    padding: 24px; display: flex; flex-direction: column; gap: 18px;
+  }
+  section.dark .card {
+    background: #16211f00; background: rgba(255,255,255,0.04); border-color: var(--border-d);
+  }
+  .num {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; color: var(--muted-l);
+    letter-spacing: 0.08em;
+  }
+  section.dark .num { color: var(--muted-d); }
+  .hero-row { display: flex; align-items: center; gap: 28px; min-height: 116px; }
+  img.hero { width: 104px; height: 104px; }
+  .meta h3 { font-size: 1rem; font-weight: 600; letter-spacing: -0.01em; }
+  .meta p { font-size: 0.82rem; color: var(--muted-l); margin-top: 4px; line-height: 1.5; }
+  section.dark .meta p { color: var(--muted-d); }
+
+  .sizes {
+    display: flex; align-items: flex-end; gap: 22px;
+    border-top: 1px dashed var(--border-l); padding-top: 18px;
+  }
+  section.dark .sizes { border-top-color: var(--border-d); }
+  .size-item { display: flex; flex-direction: column; gap: 8px; align-items: center; }
+  .size-tag { font-size: 0.62rem; font-family: "IBM Plex Mono", monospace; color: var(--muted-l); }
+  section.dark .size-tag { color: var(--muted-d); }
+  .lockup { display: inline-flex; align-items: center; gap: 7px; font-weight: 600; font-size: 15px; letter-spacing: -0.01em; }
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>kernic — five marks</h1>
+  <p>Each option is shown large, then at its real working sizes: 32px (favicon tab),
+     20px beside the wordmark (header), and 16px (smallest bookmark/favicon).
+     Top row on light, bottom on dark. Files sit next to this page as numbered SVGs.</p>
+</div>
+
+<section class="light-label"><h2>On light</h2></section>
+<div class="grid" id="grid-light"></div>
+
+<section class="dark">
+  <h2>On dark</h2>
+  <div class="grid" id="grid-dark" style="max-width:none;"></div>
+</section>
+
+<script>
+  const options = [
+    { file: "01-kern-gap.svg", num: "01", name: "The Gap",
+      why: "The kerning made literal: stem and arms held apart by a deliberate channel of space, one sky sliver marking the adjustment. Solid fills read crisp at every size." },
+    { file: "02-guillemets.svg", num: "02", name: "Guillemets",
+      why: "Pure typography — the French quote marks pulled close together, a single pink point at their optical centre. Editorial, quiet, foundry-grade." },
+    { file: "03-specimen-k.svg", num: "03", name: "Specimen",
+      why: "A glyph on its metrics: cap height, x-height, baseline. Says \u201Cwe know type\u201D the way a type foundry would. Most literal design-informed reference." },
+    { file: "04-baseline-shift.svg", num: "04", name: "Baseline Shift",
+      why: "One K cut at the waist, lower half nudged along the baseline over a dashed guide. A typesetting operation drawn into the mark." },
+    { file: "05-gradient-monogram.svg", num: "05", name: "Monogram",
+      why: "App-tile forward: the brand gradient field with a paper-white custom K. The most product-company of the set; strongest as favicon and app icon." },
+  ];
+
+  function card(o) {
+    return `
+    <div class="card">
+      <span class="num">${o.num}</span>
+      <div class="hero-row">
+        <img class="hero" src="${o.file}" alt="${o.name}">
+        <div class="meta"><h3>${o.name}</h3><p>${o.why}</p></div>
+      </div>
+      <div class="sizes">
+        <div class="size-item"><img src="${o.file}" style="width:32px;height:32px;" alt=""><span class="size-tag">32</span></div>
+        <div class="size-item"><span class="lockup"><img src="${o.file}" style="width:20px;height:20px;" alt="">kernic</span><span class="size-tag">20 · header</span></div>
+        <div class="size-item"><img src="${o.file}" style="width:16px;height:16px;" alt=""><span class="size-tag">16</span></div>
+      </div>
+    </div>`;
+  }
+  document.getElementById("grid-light").innerHTML = options.map(card).join("");
+  document.getElementById("grid-dark").innerHTML = options.map(card).join("");
+</script>
+
+</body>
+</html>

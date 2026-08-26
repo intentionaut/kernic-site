@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <!-- 01 · The Gap — a solid geometric K whose stem-to-arm junction opens
+       into a deliberate channel of space. The kern, made visible.
+       The sky sliver marks the adjusted spacing. -->
+  <g fill="#0c3185">
+    <rect x="13" y="9" width="11" height="46" rx="1.5"/>
+    <path d="M29 37 L49 9 L59 9 L38 41 Z"/>
+    <path d="M29 27 L38 23 L59 55 L49 55 Z"/>
+  </g>
+  <rect x="24" y="26" width="4.5" height="12" fill="#45ace7"/>
+</svg>
