@@ -13,7 +13,7 @@ import jsonOut from '../generated/tokens.json?raw';
 const designMdFull = readFileSync('design.md', 'utf8');
 const designMd = designMdFull.split('\n').slice(0, 22).join('\n') + '\n…';
 
-// Honest excerpts, cut from the real generated files — not mockups.
+// Honest excerpts from the real generated files.
 const cssLines = tokensCss.split('\n').filter((l) => !l.startsWith('@import'));
 const cssSample = [
   ...cssLines.slice(0, 10),
@@ -44,28 +44,28 @@ const outputs = [
     id: 'css',
     label: 'tokens.css',
     lang: 'tokens.css',
-    note: 'Plain custom properties — paste into any stack’s entry stylesheet and you’re themed.',
+    note: 'Custom properties. Paste into any stylesheet and the site is themed.',
     code: cssSample,
   },
   {
     id: 'tailwind',
     label: 'app.css',
     lang: 'app.css',
-    note: 'A Tailwind v4 @theme — utilities like bg-primary-600 simply exist afterwards.',
+    note: 'A Tailwind v4 @theme. Utilities like bg-primary-600 just work after import.',
     code: tailwindSample,
   },
   {
     id: 'json',
     label: 'tokens.json',
     lang: 'tokens.json',
-    note: 'W3C-style tokens — Figma plugins and Style Dictionary read them unchanged.',
+    note: 'W3C DTCG format. Figma plugins and Style Dictionary read it as-is.',
     code: jsonSample,
   },
   {
     id: 'design-md',
     label: 'design.md',
     lang: 'markdown',
-    note: 'A briefing for your AI agent — the rules plus every token, in one file it can’t misread.',
+    note: 'A briefing for your AI agent. Every token plus usage rules, in one file.',
     code: designMd,
   },
 ];
@@ -87,27 +87,27 @@ const vibeData = VIBES.map((v) => ({
 const features = [
   {
     title: 'A whole look in one pick',
-    body: 'Choose a style like retro or neon and kernic fills in everything: colors, fonts, spacing. Change whatever you want later.',
+    body: 'Pick a style like retro or neon. Kernic fills in the rest: colors, fonts, spacing. Change anything later.',
   },
   {
     title: 'Colors that just work',
-    body: 'Scales are generated in OKLCH, a color space that keeps every step evenly bright. Nothing muddy, no guesswork.',
+    body: 'Scales generated in OKLCH, a color space where every step stays evenly bright. No muddy colors.',
   },
   {
     title: 'Exports that pipe anywhere',
-    body: 'css, tailwind, json and design.md print to stdout or a file. Wire one command into your build and forget it.',
+    body: 'css, tailwind, json, and design.md print to stdout or a file. One command in your build and it stays current.',
   },
   {
     title: 'Your agent stops guessing',
-    body: 'Vibe-coded apps look generic because the agent invents colors as it goes. Hand it design.md once and it styles with your system instead.',
+    body: 'Vibe-coded apps look generic because the agent makes up colors as it goes. Hand it design.md once and it uses your system.',
   },
   {
     title: '~2k Google Fonts',
-    body: 'Search Google Fonts from your terminal, with an offline fallback. Pick heading, body and mono fonts.',
+    body: 'Search ~2k Google Fonts from your terminal. Pick heading, body, and mono fonts. Offline fallback included.',
   },
   {
     title: 'Gradients included',
-    body: 'Ready-made gradients for backgrounds, buttons and headlines ship as tokens — exported to CSS vars and Tailwind utilities.',
+    body: 'Gradients for backgrounds, buttons, and headlines. Shipped as tokens in CSS vars and Tailwind utilities.',
   },
 ];
 ---
@@ -122,7 +122,7 @@ const features = [
         <div class="hero-inner">
           <h1>Vibe coding gets a <span class="grad-text">facelift</span>.</h1>
           <p class="hero-lede">
-            Answer a few questions in your terminal. kernic picks colors, fonts and spacing
+            Answer a few questions in your terminal. Kernic picks colors, fonts, and spacing
             that work together, then exports them as CSS or Tailwind tokens. No design
             experience needed.
           </p>
@@ -143,7 +143,7 @@ const features = [
         <h2 class="section-title">One system. Every output.</h2>
         <p class="section-lede">
           This site is styled by its own product. One command at build time writes
-          exactly what your stack speaks — no theme config, no plugin wiring. Each
+          exactly what your stack needs. Each
           snippet below is cut from this site's real files.
         </p>
         <div class="tabs" role="tablist" aria-label="Export formats">
@@ -193,9 +193,7 @@ const features = [
       <div class="container">
         <h2 class="section-title">Pick a vibe</h2>
         <p class="section-lede">
-          Eight starting points, each a real preset inside kernic. Click one and watch the
-          preview re-skin — then push the controls. This site runs on
-          <strong>corporate</strong>.
+          Eight presets, each one real inside kernic. Click one and watch the preview change. Then push the controls. This site runs on <strong>corporate</strong>.
         </p>
 
         <div class="studio-panel">
@@ -227,7 +225,7 @@ const features = [
                 <p class="sp-kicker">Design system</p>
                 <p class="sp-headline">Vibe coding gets a facelift.</p>
                 <p class="sp-copy">
-                  Color, type and spacing that agree with each other — generated once,
+                  Color, type and spacing that work together. Generated once,
                   applied everywhere.
                 </p>
                 <div class="sp-row">
@@ -274,8 +272,8 @@ const features = [
     <section class="section">
       <div class="container">
         <div class="cta-panel">
-          <h2>Free forever, MIT licensed</h2>
-          <p>The CLI runs on your machine. Your design system is a plain JSON file you keep.</p>
+          <h2>Free forever. MIT licensed.</h2>
+          <p>Runs on your machine. Your design system is a plain JSON file you own.</p>
           <span class="install-pill install-pill-light"><span class="prompt">$</span> npx kernic</span>
         </div>
       </div>

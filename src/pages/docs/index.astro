@@ -31,7 +31,7 @@ import CodeBlock from '../../components/CodeBlock.astro';
   <CodeBlock lang="shell" code={`kernic create launch-page --vibe corporate-clean --yes`} />
 
   <h2>Export tokens</h2>
-  <p>Every format goes to stdout, so you pipe it wherever it belongs:</p>
+  <p>Every format prints to stdout. Pipe it wherever it belongs:</p>
   <CodeBlock
     lang="shell"
     code={`# Tailwind v4 app.css\nkernic export midnight-neon -f tailwind > src/app.css\n\n# Plain CSS vars anywhere\nkernic export midnight-neon -f css >> styles/global.css\n\n# Machine-readable tokens for tools\nkernic export midnight-neon -f json > design/tokens.json\n\n# All of them at once\nkernic export midnight-neon -f all -o ./design-system`}
@@ -39,7 +39,7 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
   <h2>Tune it visually or by hand</h2>
   <p>
-    Every export is regenerated from the saved JSON system. Tweak the file directly, or open the
+    Every export regenerates from the saved JSON. Tweak the file by hand, or open the
     local visual editor:
   </p>
   <CodeBlock lang="shell" code={`kernic studio midnight-neon   # local web editor, 127.0.0.1 only`} />
