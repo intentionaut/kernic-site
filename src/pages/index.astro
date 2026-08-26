@@ -5,61 +5,111 @@ import Footer from '../components/Footer.astro';
 import Terminal from '../components/Terminal.astro';
 import CodeBlock from '../components/CodeBlock.astro';
 import { readFileSync } from 'node:fs';
+import { VIBES } from 'kernic/dist/vibes.js';
 import tokensCss from '../styles/tokens.css?raw';
 import tailwindOut from '../generated/tailwind.css?raw';
 import jsonOut from '../generated/tokens.json?raw';
-import tokensJson from '../../tokens.json';
 
-const designMd = readFileSync('design.md', 'utf8').split('\n').slice(0, 40).join('\n');
+const designMdFull = readFileSync('design.md', 'utf8');
+const designMd = designMdFull.split('\n').slice(0, 22).join('\n') + '\n…';
 
-const cssSample = tokensCss
-  .split('\n')
-  .filter((l) => !l.startsWith('@import'))
-  .join('\n');
+// Honest excerpts, cut from the real generated files — not mockups.
+const cssLines = tokensCss.split('\n').filter((l) => !l.startsWith('@import'));
+const cssSample = [
+  ...cssLines.slice(0, 10),
+  '  /* … every color step, font stack, radius & gradient token */',
+  '}',
+].join('\n');
+
+const twLines = tailwindOut.split('\n');
+const themeAt = twLines.findIndex((l) => l.trim() === '@theme {');
+const tailwindSample = [
+  twLines[0],
+  twLines[1],
+  '',
+  ...twLines.slice(themeAt, themeAt + 8),
+  '  /* … */',
+  '}',
+].join('\n');
+
+const jsonLines = jsonOut.split('\n');
+const jsonSample = [
+  ...jsonLines.slice(0, 12),
+  '    …',
+  '}',
+].join('\n');
 
 const outputs = [
-  { id: 'css', label: 'css', lang: 'tokens.css', code: cssSample },
-  { id: 'tailwind', label: 'tailwind', lang: 'app.css', code: tailwindOut },
-  { id: 'json', label: 'json', lang: 'tokens.json', code: jsonOut },
-  { id: 'design-md', label: 'design.md', lang: 'markdown', code: designMd },
+  {
+    id: 'css',
+    label: 'tokens.css',
+    lang: 'tokens.css',
+    note: 'Plain custom properties — paste into any stack’s entry stylesheet and you’re themed.',
+    code: cssSample,
+  },
+  {
+    id: 'tailwind',
+    label: 'app.css',
+    lang: 'app.css',
+    note: 'A Tailwind v4 @theme — utilities like bg-primary-600 simply exist afterwards.',
+    code: tailwindSample,
+  },
+  {
+    id: 'json',
+    label: 'tokens.json',
+    lang: 'tokens.json',
+    note: 'W3C-style tokens — Figma plugins and Style Dictionary read them unchanged.',
+    code: jsonSample,
+  },
+  {
+    id: 'design-md',
+    label: 'design.md',
+    lang: 'markdown',
+    note: 'A briefing for your AI agent — the rules plus every token, in one file it can’t misread.',
+    code: designMd,
+  },
 ];
 
-const ramps = Object.entries(tokensJson.color).map(([name, steps]) => ({
-  name,
-  steps: Object.entries(steps as Record<string, { $value: string }>).map(([k, v]) => ({
-    step: k,
-    hex: v.$value,
-  })),
+const radiusStart: Record<string, number> = { sharp: 2, soft: 8, round: 14, pill: 18 };
+
+const vibeData = VIBES.map((v) => ({
+  id: v.id,
+  label: v.label,
+  description: v.description,
+  primarySeed: v.primarySeed,
+  accentSeed: v.accentSeed,
+  dark: v.darkModeDefault,
+  radiusPx: radiusStart[v.radius],
+  headingFont: v.fonts.heading,
+  bodyFont: v.fonts.body,
 }));
 
 const features = [
-  {
-    title: 'Colors that just work',
-    body: 'Scales are generated in OKLCH, a color space that keeps every step evenly bright. Nothing muddy, no guesswork.',
-  },
   {
     title: 'A whole look in one pick',
     body: 'Choose a style like retro or neon and kernic fills in everything: colors, fonts, spacing. Change whatever you want later.',
   },
   {
-    title: 'Gradients included',
-    body: 'Ready-made gradients for backgrounds, buttons and headlines ship as tokens with the neon looks.',
+    title: 'Colors that just work',
+    body: 'Scales are generated in OKLCH, a color space that keeps every step evenly bright. Nothing muddy, no guesswork.',
+  },
+  {
+    title: 'Exports that pipe anywhere',
+    body: 'css, tailwind, json and design.md print to stdout or a file. Wire one command into your build and forget it.',
+  },
+  {
+    title: 'Your agent stops guessing',
+    body: 'Vibe-coded apps look generic because the agent invents colors as it goes. Hand it design.md once and it styles with your system instead.',
   },
   {
     title: '~2k Google Fonts',
     body: 'Search Google Fonts from your terminal, with an offline fallback. Pick heading, body and mono fonts.',
   },
   {
-    title: 'Exports that pipe anywhere',
-    body: 'css, tailwind, json and fonts print to stdout. Send them to a file, a build step or another tool.',
-  },
-  {
-    title: 'Works with AI coding tools',
-    body: 'One command writes design.md and tokens.json so your agent stops inventing random colors. MCP server included.',
+    title: 'Gradients included',
+    body: 'Ready-made gradients for backgrounds, buttons and headlines ship as tokens — exported to CSS vars and Tailwind utilities.',
   },
 ];
-
-const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', 'fun', 'earthy'];
 ---
 
 <Base>
@@ -92,8 +142,9 @@ const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', '
       <div class="container">
         <h2 class="section-title">One system. Every output.</h2>
         <p class="section-lede">
-          These aren't mockups. This site runs on <code>kernic export kernic-io</code>, run at
-          build time.
+          This site is styled by its own product. One command at build time writes
+          exactly what your stack speaks — no theme config, no plugin wiring. Each
+          snippet below is cut from this site's real files.
         </p>
         <div class="tabs" role="tablist" aria-label="Export formats">
           {outputs.map((o, i) => (
@@ -115,7 +166,10 @@ const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', '
             aria-labelledby={`tab-${o.id}`}
             hidden={i !== 0}
           >
-            <CodeBlock code={o.code} lang={o.lang} />
+            <p class="output-note">{o.note}</p>
+            <div class="panel-scroll">
+              <CodeBlock code={o.code} lang={o.lang} />
+            </div>
           </div>
         ))}
       </div>
@@ -135,30 +189,87 @@ const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', '
       </div>
     </section>
 
-    <section class="section">
+    <section class="section" id="vibes">
       <div class="container">
         <h2 class="section-title">Pick a vibe</h2>
         <p class="section-lede">
-          This site uses <strong>neon</strong>. Here's its primary color scale, taken straight
-          from the generated system:
+          Eight starting points, each a real preset inside kernic. Click one and watch the
+          preview re-skin — then push the controls. This site runs on
+          <strong>corporate</strong>.
         </p>
-        {ramps.map((ramp) => (
-          <div class="ramp-block">
-            <p class="ramp-name">--color-{ramp.name}-*</p>
-            <div class="swatch-row">
-              {ramp.steps.map((s) => (
-                <div class="swatch" style={`background: ${s.hex}`} title={`--color-${ramp.name}-${s.step}: ${s.hex}`}></div>
-              ))}
+
+        <div class="studio-panel">
+          <div class="sp-rail" role="group" aria-label="Vibe presets">
+            {VIBES.map((v) => (
+              <button
+                class="sp-vibe"
+                type="button"
+                data-vibe={v.id}
+                aria-pressed={v.id === 'corporate' ? 'true' : 'false'}
+              >
+                <span class="sp-swatches" aria-hidden="true">
+                  <i style={`background:${v.primarySeed}`}></i>
+                  <i style={`background:${v.accentSeed}`}></i>
+                </span>
+                {v.label}
+                {v.id === 'corporate' && <span class="vibe-badge">this site</span>}
+              </button>
+            ))}
+          </div>
+
+          <div class="sp-main">
+            <div class="sp-stage" id="sp-stage" data-mode="light">
+              <div class="sp-nav">
+                <span class="sp-brand">kernic</span>
+                <span class="sp-links"><i>Docs</i><i>GitHub</i></span>
+              </div>
+              <div class="sp-hero">
+                <p class="sp-kicker">Design system</p>
+                <p class="sp-headline">Kern your whole app.</p>
+                <p class="sp-copy">
+                  Color, type and spacing that agree with each other — generated once,
+                  applied everywhere.
+                </p>
+                <div class="sp-row">
+                  <span class="sp-btn">Get started</span>
+                  <span class="sp-chip"><i class="sp-dot"></i>accent</span>
+                </div>
+              </div>
+              <p class="sp-status" id="sp-status"></p>
+            </div>
+
+            <div class="sp-controls">
+              <button class="sp-ctl" id="sp-mode" type="button" aria-pressed="false">Dark</button>
+              <label class="sp-ctl sp-range">
+                Radius
+                <input id="sp-radius" type="range" min="0" max="20" step="1" value="8" aria-label="Corner radius" />
+              </label>
+              <label class="sp-ctl">
+                Type scale
+                <select id="sp-scale" aria-label="Type scale">
+                  <option value="0.85">Compact</option>
+                  <option value="1" selected>Default</option>
+                  <option value="1.15">Roomy</option>
+                </select>
+              </label>
             </div>
           </div>
-        ))}
-        <div class="vibe-chips">
-          {vibes.map((v) => (
-            <span class="vibe-chip">{v}</span>
-          ))}
+        </div>
+
+        <div class="sp-footnote">
+          <p>
+            The real editor runs locally with live OKLCH ramps, hue harmonies and ~2k
+            Google Fonts. Studio, the cloud tier, adds multi-brand management, sync
+            across repos and version history on top.
+          </p>
+          <div class="sp-cta-row">
+            <span class="install-pill"><span class="prompt">$</span> npx kernic studio</span>
+          </div>
         </div>
       </div>
     </section>
+
+    <script type="application/json" id="sp-data" set:html={JSON.stringify(vibeData)} />
 
     <section class="section">
       <div class="container">
@@ -186,6 +297,51 @@ const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', '
   });
 </script>
 
+<script is:inline>
+  (() => {
+    const DATA = JSON.parse(document.getElementById('sp-data').textContent);
+    const stage = document.getElementById('sp-stage');
+    const status = document.getElementById('sp-status');
+    const modeBtn = document.getElementById('sp-mode');
+    const radius = document.getElementById('sp-radius');
+    const scaleSel = document.getElementById('sp-scale');
+    const rail = [...document.querySelectorAll('.sp-vibe')];
+
+    function apply(id) {
+      const v = DATA.find((d) => d.id === id);
+      if (!v) return;
+      stage.style.setProperty('--sp-primary', v.primarySeed);
+      stage.style.setProperty('--sp-accent', v.accentSeed);
+      stage.style.setProperty('--sp-radius', v.radiusPx + 'px');
+      stage.style.setProperty('--sp-font-h', `'${v.headingFont}', sans-serif`);
+      stage.style.setProperty('--sp-font-b', `'${v.bodyFont}', sans-serif`);
+      setMode(v.dark);
+      radius.value = v.radiusPx;
+      scaleSel.value = '1';
+      stage.style.setProperty('--sp-scale', '1');
+      status.textContent = `${v.label} — ${v.description}`;
+      for (const b of rail) b.setAttribute('aria-pressed', String(b.dataset.vibe === id));
+    }
+
+    function setMode(dark) {
+      stage.dataset.mode = dark ? 'dark' : 'light';
+      modeBtn.textContent = dark ? 'Light' : 'Dark';
+      modeBtn.setAttribute('aria-pressed', String(dark));
+    }
+
+    for (const b of rail) b.addEventListener('click', () => apply(b.dataset.vibe));
+    modeBtn.addEventListener('click', () => setMode(stage.dataset.mode !== 'dark'));
+    radius.addEventListener('input', () => {
+      stage.style.setProperty('--sp-radius', radius.value + 'px');
+    });
+    scaleSel.addEventListener('change', () => {
+      stage.style.setProperty('--sp-scale', scaleSel.value);
+    });
+
+    apply('corporate');
+  })();
+</script>
+
 <style>
   .hero-grid {
     display: grid;
@@ -197,6 +353,261 @@ const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', '
   @media (max-width: 900px) {
     .hero-grid {
       grid-template-columns: 1fr;
+    }
+  }
+
+  .studio-panel {
+    display: grid;
+    grid-template-columns: 230px minmax(0, 1fr);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    margin-top: var(--space-1-5);
+    background: color-mix(in srgb, var(--surface) 40%, transparent);
+  }
+
+  .sp-rail {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 0.6rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .sp-vibe {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.48rem 0.6rem;
+    border: 0;
+    background: transparent;
+    border-radius: var(--radius-md);
+    font: inherit;
+    font-size: var(--text-sm);
+    color: var(--text);
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .sp-vibe:hover {
+    background: color-mix(in srgb, var(--color-neutral-200) 45%, transparent);
+  }
+
+  .sp-vibe[aria-pressed='true'] {
+    background: color-mix(in srgb, var(--color-primary-100) 60%, transparent);
+    font-weight: 600;
+  }
+
+  .sp-swatches {
+    display: inline-flex;
+    flex: none;
+  }
+
+  .sp-swatches i {
+    width: 0.85rem;
+    height: 0.85rem;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+  }
+
+  .sp-swatches i + i {
+    margin-left: -0.35rem;
+  }
+
+  .vibe-badge {
+    margin-left: auto;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    background: #e74ea9;
+    padding: 0.12rem 0.45rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .sp-main {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .sp-stage {
+    --sp-primary: #2563eb;
+    --sp-accent: #0ea5e9;
+    --sp-radius: 8px;
+    --sp-scale: 1;
+    --sp-font-h: 'Inter', sans-serif;
+    --sp-font-b: 'Inter', sans-serif;
+    flex: 1;
+    padding: clamp(1.2rem, 3vw, 2.2rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.9rem, 2vw, 1.4rem);
+    background: #fbfdff;
+    color: #141a1d;
+    transition: background 250ms ease, color 250ms ease;
+  }
+
+  .sp-stage[data-mode='dark'] {
+    background: #10181b;
+    color: #eef4f7;
+  }
+
+  .sp-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .sp-brand {
+    font-family: var(--sp-font-h);
+    font-weight: 600;
+    font-size: calc(var(--sp-scale) * 1rem);
+    color: var(--sp-primary);
+  }
+
+  .sp-links {
+    font-size: calc(var(--sp-scale) * 0.78rem);
+    opacity: 0.65;
+  }
+
+  .sp-links i + i {
+    font-style: normal;
+    margin-left: 0.9rem;
+  }
+
+  .sp-kicker {
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-size: calc(var(--sp-scale) * 0.66rem);
+    font-weight: 600;
+    color: var(--sp-accent);
+    margin-bottom: 0.35rem;
+  }
+
+  .sp-headline {
+    font-family: var(--sp-font-h);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-size: calc(var(--sp-scale) * 2.1rem);
+    max-width: 18ch;
+  }
+
+  .sp-copy {
+    font-family: var(--sp-font-b);
+    font-size: calc(var(--sp-scale) * 0.92rem);
+    line-height: 1.55;
+    opacity: 0.78;
+    max-width: 44ch;
+  }
+
+  .sp-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    flex-wrap: wrap;
+    margin-top: 0.25rem;
+  }
+
+  .sp-btn {
+    font-family: var(--sp-font-b);
+    font-weight: 600;
+    font-size: calc(var(--sp-scale) * 0.82rem);
+    color: #fff;
+    background: var(--sp-primary);
+    padding: 0.42em 1.05em;
+    border-radius: var(--sp-radius);
+  }
+
+  .sp-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--sp-font-mono, ui-monospace, monospace);
+    font-size: calc(var(--sp-scale) * 0.72rem);
+    border: 1px solid currentColor;
+    opacity: 0.75;
+    padding: 0.3em 0.8em;
+    border-radius: var(--sp-radius);
+  }
+
+  .sp-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 999px;
+    background: var(--sp-accent);
+  }
+
+  .sp-status {
+    margin-top: auto;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    opacity: 0.55;
+  }
+
+  .sp-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    flex-wrap: wrap;
+    padding: 0.7rem clamp(1.2rem, 3vw, 2.2rem);
+    border-top: 1px solid var(--border);
+  }
+
+  .sp-ctl {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font: inherit;
+    font-size: var(--text-sm);
+    color: var(--text);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 0.32rem 0.7rem;
+    cursor: pointer;
+  }
+
+  .sp-range input {
+    accent-color: var(--color-primary-500);
+    width: 7rem;
+  }
+
+  .sp-footnote {
+    margin-top: var(--space-1-5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-1);
+    flex-wrap: wrap;
+  }
+
+  .sp-footnote p {
+    font-size: var(--text-sm);
+    color: var(--muted-text);
+    max-width: 58ch;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .studio-panel {
+      grid-template-columns: 1fr;
+    }
+    .sp-rail {
+      flex-direction: row;
+      overflow-x: auto;
+      border-right: 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .sp-vibe {
+      white-space: nowrap;
+    }
+    .vibe-badge {
+      position: static;
+      margin-left: 0.15rem;
     }
   }
 </style>

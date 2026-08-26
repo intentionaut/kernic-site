@@ -1,4 +1,5 @@
 @import './tokens.css';
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&family=DM+Serif+Display&family=Fraunces:wght@600&family=Fredoka:wght@600&family=Quicksand:wght@600&family=Space+Grotesk:wght@600&display=swap');
 
 /* ---- Theme mapping: light is the site default ---------------------------- */
 :root {
@@ -214,15 +215,18 @@ svg {
 }
 
 .hero-inner {
-  padding-block: clamp(var(--space-6), 10vw, var(--space-8));
+  padding-block: clamp(var(--space-6), 9vw, var(--space-8));
   display: grid;
-  gap: var(--space-1-5);
+  gap: var(--space-1);
   justify-items: start;
 }
 
 .hero h1 {
-  font-size: clamp(var(--text-3xl), 8vw, var(--text-5xl));
-  max-width: 14ch;
+  font-size: clamp(var(--text-2xl), 4.6vw, var(--text-4xl));
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  max-width: 18ch;
 }
 
 .grad-text {
@@ -234,8 +238,10 @@ svg {
 
 .hero-lede {
   font-size: var(--text-lg);
+  line-height: 1.55;
   color: var(--muted-text);
   max-width: 52ch;
+  margin-top: var(--space-0-5);
 }
 
 .hero-actions {
@@ -253,6 +259,18 @@ svg {
 
 .hero .btn-primary:hover {
   background: var(--color-primary-500);
+}
+
+/* ---- Output panels -------------------------------------------------------- */
+.output-note {
+  font-size: var(--text-sm);
+  color: var(--muted-text);
+  margin-bottom: var(--space-0-5);
+}
+
+.panel-scroll .codeblock pre {
+  max-height: 24rem;
+  overflow: auto;
 }
 
 /* ---- Install pill --------------------------------------------------------- */
