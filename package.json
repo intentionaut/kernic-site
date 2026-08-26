@@ -6,7 +6,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "tokens": "kernic export kernic-io -f css > src/styles/tokens.css",
+    "tokens": "mkdir -p src/generated && kernic export kernic-io -f css > src/styles/tokens.css && kernic export kernic-io -f tailwind > src/generated/tailwind.css && kernic export kernic-io -f json > src/generated/tokens.json",
     "dev": "npm run tokens && astro dev",
     "build": "npm run tokens && astro build",
     "preview": "astro preview",

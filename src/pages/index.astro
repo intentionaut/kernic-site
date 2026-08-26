@@ -4,16 +4,12 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Terminal from '../components/Terminal.astro';
 import CodeBlock from '../components/CodeBlock.astro';
-import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import tokensCss from '../styles/tokens.css?raw';
+import tailwindOut from '../generated/tailwind.css?raw';
+import jsonOut from '../generated/tokens.json?raw';
 import tokensJson from '../../tokens.json';
 
-const run = (args: string) =>
-  execSync(`npx --no-install kernic export kernic-io ${args}`, { encoding: 'utf8' });
-
-const tailwindOut = run('-f tailwind');
-const jsonOut = run('-f json');
 const designMd = readFileSync('design.md', 'utf8').split('\n').slice(0, 40).join('\n');
 
 const cssSample = tokensCss
