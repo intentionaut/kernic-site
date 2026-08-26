@@ -1,0 +1,22 @@
+{
+  "name": "kernic-site",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "tokens": "kernic export kernic-io -f css > src/styles/tokens.css",
+    "dev": "npm run tokens && astro dev",
+    "build": "npm run tokens && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^7.2.7",
+    "kernic": "file:../kernic"
+  },
+  "allowScripts": {
+    "esbuild": true
+  }
+}

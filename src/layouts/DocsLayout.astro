@@ -1,0 +1,36 @@
+---
+import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  active: 'start' | 'cli' | 'tokens' | 'agents';
+}
+const { title, description, active } = Astro.props;
+
+const nav = [
+  { id: 'start', href: '/docs', label: 'Getting started' },
+  { id: 'cli', href: '/docs/cli', label: 'CLI reference' },
+  { id: 'tokens', href: '/docs/tokens', label: 'Tokens' },
+  { id: 'agents', href: '/docs/agents', label: 'AI agents' },
+];
+---
+
+<Base title={title} description={description}>
+  <Header />
+  <main class="container">
+    <div class="docs-layout">
+      <nav class="docs-sidebar" aria-label="Docs">
+        {nav.map((n) => (
+          <a href={n.href} aria-current={n.id === active ? 'page' : undefined}>{n.label}</a>
+        ))}
+      </nav>
+      <div class="docs-content">
+        <slot />
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Base>

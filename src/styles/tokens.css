@@ -1,0 +1,101 @@
+/* kernic — "kernic-io" (vibe: corporate) */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+
+:root {
+  --color-primary-50: #f3f7ff;
+  --color-primary-100: #e1ecff;
+  --color-primary-200: #c3d8ff;
+  --color-primary-300: #9bbeff;
+  --color-primary-400: #6e9fff;
+  --color-primary-500: #3a79ff;
+  --color-primary-600: #205cde;
+  --color-primary-700: #1344b1;
+  --color-primary-800: #0c3185;
+  --color-primary-900: #041f5f;
+  --color-primary-950: #000e3b;
+  --color-accent-50: #eff8ff;
+  --color-accent-100: #d8efff;
+  --color-accent-200: #aedfff;
+  --color-accent-300: #7cc8f7;
+  --color-accent-400: #45ace7;
+  --color-accent-500: #008dc9;
+  --color-accent-600: #0071a2;
+  --color-accent-700: #00567d;
+  --color-accent-800: #003f5d;
+  --color-accent-900: #002a40;
+  --color-accent-950: #001624;
+  --color-neutral-50: #f0f8fd;
+  --color-neutral-100: #e3edf2;
+  --color-neutral-200: #ced9df;
+  --color-neutral-300: #b3c0c7;
+  --color-neutral-400: #96a4ac;
+  --color-neutral-500: #76868e;
+  --color-neutral-600: #5d6c73;
+  --color-neutral-700: #455259;
+  --color-neutral-800: #323c42;
+  --color-neutral-900: #1f282c;
+  --color-neutral-950: #0e1518;
+
+  /* Semantic (light) */
+  --background: #f0f8fd;
+  --surface: #e3edf2;
+  --text: #0e1518;
+  --muted-text: #5d6c73;
+  --border: #ced9df;
+  --ring: #205cde;
+
+  /* Semantic (dark) — activate via .dark class or media query below */
+  --dark-background: #0e1518;
+  --dark-surface: #1f282c;
+  --dark-text: #f0f8fd;
+  --dark-muted-text: #96a4ac;
+  --dark-border: #323c42;
+  --dark-ring: #205cde;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(120deg, #45ace7 0%, #3a79ff 52%, #0c3185 100%);
+  --gradient-mesh: radial-gradient(60% 85% at 12% 8%, #7cc8f755 0%, transparent 60%), radial-gradient(55% 75% at 88% 10%, #e74ea963 0%, transparent 58%), radial-gradient(80% 95% at 55% 96%, #3a79ff40 0%, transparent 62%), linear-gradient(180deg, #1f282c, #0e1518);
+  --gradient-text: linear-gradient(92deg, #008dc9 0%, #6e9fff 55%, #e74ea9 100%);
+
+  /* Typography */
+  --text-xs: 0.800rem;
+  --text-sm: 0.894rem;
+  --text-base: 1.000rem;
+  --text-lg: 1.250rem;
+  --text-xl: 1.563rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: 3.052rem;
+  --text-4xl: 4.768rem;
+  --text-5xl: 7.451rem;
+  --font-heading: "Inter", ui-serif, Georgia, serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Radius & spacing */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --space-0-5: 0.5rem;
+  --space-1: 1rem;
+  --space-1-5: 1.5rem;
+  --space-2: 2rem;
+  --space-3: 3rem;
+  --space-4: 4rem;
+  --space-6: 6rem;
+  --space-8: 8rem;
+  --space-12: 12rem;
+  --space-16: 16rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: var(--dark-background);
+    --surface: var(--dark-surface);
+    --text: var(--dark-text);
+    --muted-text: var(--dark-muted-text);
+    --border: var(--dark-border);
+  }
+}

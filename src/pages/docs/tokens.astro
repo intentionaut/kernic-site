@@ -1,0 +1,110 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import tokens from '../../../tokens.json';
+import tokensCss from '../../styles/tokens.css?raw';
+
+type Step = { step: string; hex: string };
+const ramps = Object.entries(tokens.color).map(([name, steps]) => ({
+  name,
+  steps: Object.entries(steps as Record<string, { $value: string }>).map(([k, v]) => ({
+    step: k,
+    hex: v.$value,
+  })) as Step[],
+}));
+
+const semantic: [string, string, string][] = [
+  ['--background', 'var(--color-neutral-50)', 'var(--color-neutral-950)'],
+  ['--surface', 'var(--color-neutral-100)', 'var(--color-neutral-900)'],
+  ['--text', 'var(--color-neutral-950)', 'var(--color-neutral-50)'],
+  ['--muted-text', 'var(--color-neutral-600)', 'var(--color-neutral-400)'],
+  ['--border', 'var(--color-neutral-200)', 'var(--color-neutral-800)'],
+  ['--ring', 'var(--color-primary-500)', 'var(--color-primary-500)'],
+];
+
+const gradients = [...tokensCss.matchAll(/--gradient-([a-z]+):\s*([^;]+);/g)].map(
+  ([, name, value]) => ({ name, value })
+);
+
+const typeEntries = Object.entries(tokens.typography) as [string, { $value: string }][];
+const radiusEntries = Object.entries(tokens.radius) as [string, { $value: string }][];
+const fonts = Object.entries(tokens.font) as [string, { $value: string }][];
+---
+
+<DocsLayout
+  title="kernic tokens reference"
+  description="The kernic-io system's full token reference, rendered live from tokens.json."
+  active="tokens"
+>
+  <h1>Tokens</h1>
+  <p>
+    This page renders the actual <code>kernic export kernic-io -f json</code> output. It's the
+    same file a Figma or Style Dictionary pipeline reads. Change the system and this page
+    changes.
+  </p>
+
+  <h2>Color ramps</h2>
+  {ramps.map((ramp) => (
+    <div class="ramp-block">
+      <p class="ramp-name">--color-{ramp.name}-*</p>
+      <div class="swatch-row">
+        {ramp.steps.map((s) => (
+          <div
+            class="swatch"
+            style={`background: ${s.hex}`}
+            title={`--color-${ramp.name}-${s.step}: ${s.hex}`}
+          ></div>
+        ))}
+      </div>
+    </div>
+  ))}
+
+  <h2>Semantic tokens</h2>
+  <table class="docs-table">
+    <thead>
+      <tr><th>Token</th><th>Light</th><th>Dark</th></tr>
+    </thead>
+    <tbody>
+      {semantic.map(([name, light, dark]) => (
+        <tr><td><code>{name}</code></td><td><code>{light}</code></td><td><code>{dark}</code></td></tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>Typography</h2>
+  <p>Type sizes use a 1.25 ratio scale:</p>
+  <div>
+    {typeEntries.map(([name, t]) => (
+      <div class="type-specimen-row">
+        <span class="type-token">--text-{name}</span>
+        <span style={`font-size: var(--text-${name}); line-height: 1.2;`}>Aa</span>
+        <span class="type-token" style="margin-left:auto">{t.$value}</span>
+      </div>
+    ))}
+  </div>
+  <h3>Families</h3>
+  <ul>
+    {fonts.map(([role, f]) => {
+      const family = Array.isArray(f.$value) ? f.$value[0] : f.$value;
+      return (
+        <li>
+          <code>--font-{role}</code>: <span style={`font-family: var(--font-${role});`}>{family}</span>
+        </li>
+      );
+    })}
+  </ul>
+
+  <h2>Radius</h2>
+  <div class="radius-demo">
+    {radiusEntries.map(([name, r]) => (
+      <div class="radius-box" style={`border-radius: var(--radius-${name});`}>{r.$value}</div>
+    ))}
+  </div>
+
+  <h2>Gradients</h2>
+  {gradients.map((g) => (
+    <div style="margin-bottom: var(--space-1);">
+      <div class="gradient-preview" style={`background: ${g.value}`}></div>
+      <code style="font-size: var(--text-xs); color: var(--muted-text);">--gradient-{g.name}</code>
+    </div>
+  ))}
+</DocsLayout>

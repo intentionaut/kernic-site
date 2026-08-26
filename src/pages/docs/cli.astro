@@ -1,0 +1,88 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+
+const commands: [string, string][] = [
+  ['kernic', 'Interactive wizard'],
+  ['kn', 'Alias for kernic'],
+  ['kernic create <name> [--vibe <id>]', 'Create a new system non-interactively'],
+  ['kernic list', 'List saved systems'],
+  ['kernic show <name>', 'Full spec + swatches'],
+  ['kernic palette <name>', 'Just the swatches'],
+  ['kernic studio [name]', 'Local visual editor in your browser'],
+  ['kernic export <name> -f <format>', 'Output tokens to stdout'],
+  ['kernic context <name> -o ./', 'Write design.md + W3C tokens.json for agents'],
+  ['kernic mcp', 'MCP server for coding tools'],
+  ['kernic delete <name>', 'Remove a system'],
+];
+
+const vibes = [
+  ['retro', '70s & 80s'],
+  ['tech', 'Modern SaaS'],
+  ['corporate', 'Clean & trustworthy'],
+  ['neon', 'Stripe-style gradient fintech'],
+  ['minimal', 'Quiet monochrome'],
+  ['soft-pastel', 'Gentle & friendly'],
+  ['fun', 'Loud solid color-blocks'],
+  ['earthy', 'Organic & warm'],
+];
+
+const formats: [string, string][] = [
+  ['css', 'Plain CSS custom properties + Google Fonts imports'],
+  ['tailwind', 'Tailwind v4 @theme block'],
+  ['json', 'W3C DTCG-style token JSON'],
+  ['fonts', 'Google Fonts @import statements'],
+  ['design-md', 'design.md agent context'],
+  ['all', 'Every format, written with -o ./design-system'],
+];
+---
+
+<DocsLayout
+  title="kernic CLI reference"
+  description="Every kernic command, vibe id and export format."
+  active="cli"
+>
+  <h1>CLI reference</h1>
+
+  <h2>Commands</h2>
+  <table class="docs-table">
+    <thead>
+      <tr><th>Command</th><th>What it does</th></tr>
+    </thead>
+    <tbody>
+      {commands.map(([cmd, desc]) => (
+        <tr><td><code>{cmd}</code></td><td>{desc}</td></tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>Vibes</h2>
+  <p>Pass any of these to <code>--vibe</code>:</p>
+  <table class="docs-table">
+    <thead>
+      <tr><th>ID</th><th>Look</th></tr>
+    </thead>
+    <tbody>
+      {vibes.map(([id, look]) => (
+        <tr><td><code>{id}</code></td><td>{look}</td></tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>Export formats</h2>
+  <table class="docs-table">
+    <thead>
+      <tr><th>Format (-f)</th><th>Output</th></tr>
+    </thead>
+    <tbody>
+      {formats.map(([f, out]) => (
+        <tr><td><code>{f}</code></td><td>{out}</td></tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>MCP server</h2>
+  <p>kernic ships an MCP server so agents can query your systems live:</p>
+  <CodeBlock lang="shell" code={`claude mcp add kernic -- npx kernic mcp`} />
+  <p>Tools exposed: <code>list_systems</code> · <code>get_system</code> · <code>get_tokens</code> · <code>list_vibes</code>.</p>
+</DocsLayout>

@@ -1,0 +1,53 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+---
+
+<DocsLayout
+  title="kernic for AI agents"
+  description="Give your coding agent a design system instead of letting it invent colors."
+  active="agents"
+>
+  <h1>kernic for AI agents</h1>
+  <p>
+    Apps built by AI often look the same because the agent makes up new colors as it goes.
+    Give it your system instead. One command and one rule later, everything it writes uses
+    your tokens.
+  </p>
+
+  <h2>The one-command setup</h2>
+  <CodeBlock lang="shell" code={`kernic context midnight-neon -o .   # writes design.md + tokens.json`} />
+  <p>
+    <code>design.md</code> carries explicit adherence rules plus every token; the adjacent
+    <a href="/docs/tokens">tokens.json</a> is W3C DTCG-style, so Figma, Terrazzo and Style
+    Dictionary pipelines read it too.
+  </p>
+
+  <h2>Point the agent at it</h2>
+  <p>One line in <code>AGENTS.md</code>, <code>CLAUDE.md</code> or <code>.cursorrules</code>:</p>
+  <CodeBlock
+    lang="markdown"
+    code={`Visual design: follow ./design.md exactly.\nUse only its tokens. Never invent raw hex values.`}
+  />
+
+  <h2>Or go live over MCP</h2>
+  <CodeBlock lang="shell" code={`claude mcp add kernic -- npx kernic mcp`} />
+  <ul>
+    <li><code>list_systems</code>: discover saved systems</li>
+    <li><code>get_system</code>: full spec of one system</li>
+    <li><code>get_tokens</code>: tokens in design-md, css, tailwind, fonts, dtcg or json format</li>
+    <li><code>list_vibes</code>: available vibe presets</li>
+  </ul>
+
+  <div class="docs-callout">
+    Proof it works: you're looking at it. This site was built by an agent working strictly from
+    a <code>kernic context</code> export.
+  </div>
+
+  <h2>Why it holds up</h2>
+  <p>
+    Token files use a version number and an extensions block. New features (motion, shadows,
+    multi-brand) get added without breaking your existing files. Your systems are local JSON
+    files, and they stay that way.
+  </p>
+</DocsLayout>

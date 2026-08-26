@@ -1,0 +1,206 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Terminal from '../components/Terminal.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
+import tokensCss from '../styles/tokens.css?raw';
+import tokensJson from '../../tokens.json';
+
+const run = (args: string) =>
+  execSync(`npx --no-install kernic export kernic-io ${args}`, { encoding: 'utf8' });
+
+const tailwindOut = run('-f tailwind');
+const jsonOut = run('-f json');
+const designMd = readFileSync('design.md', 'utf8').split('\n').slice(0, 40).join('\n');
+
+const cssSample = tokensCss
+  .split('\n')
+  .filter((l) => !l.startsWith('@import'))
+  .join('\n');
+
+const outputs = [
+  { id: 'css', label: 'css', lang: 'tokens.css', code: cssSample },
+  { id: 'tailwind', label: 'tailwind', lang: 'app.css', code: tailwindOut },
+  { id: 'json', label: 'json', lang: 'tokens.json', code: jsonOut },
+  { id: 'design-md', label: 'design.md', lang: 'markdown', code: designMd },
+];
+
+const ramps = Object.entries(tokensJson.color).map(([name, steps]) => ({
+  name,
+  steps: Object.entries(steps as Record<string, { $value: string }>).map(([k, v]) => ({
+    step: k,
+    hex: v.$value,
+  })),
+}));
+
+const features = [
+  {
+    title: 'Colors that just work',
+    body: 'Scales are generated in OKLCH, a color space that keeps every step evenly bright. Nothing muddy, no guesswork.',
+  },
+  {
+    title: 'A whole look in one pick',
+    body: 'Choose a style like retro or neon and kernic fills in everything: colors, fonts, spacing. Change whatever you want later.',
+  },
+  {
+    title: 'Gradients included',
+    body: 'Ready-made gradients for backgrounds, buttons and headlines ship as tokens with the neon looks.',
+  },
+  {
+    title: '~2k Google Fonts',
+    body: 'Search Google Fonts from your terminal, with an offline fallback. Pick heading, body and mono fonts.',
+  },
+  {
+    title: 'Exports that pipe anywhere',
+    body: 'css, tailwind, json and fonts print to stdout. Send them to a file, a build step or another tool.',
+  },
+  {
+    title: 'Works with AI coding tools',
+    body: 'One command writes design.md and tokens.json so your agent stops inventing random colors. MCP server included.',
+  },
+];
+
+const vibes = ['retro', 'tech', 'corporate', 'neon', 'minimal', 'soft-pastel', 'fun', 'earthy'];
+---
+
+<Base>
+  <Header />
+
+  <main>
+    <section class="hero">
+      <div class="hero-backdrop" aria-hidden="true"></div>
+      <div class="container hero-grid">
+        <div class="hero-inner">
+          <h1>One command to a <span class="grad-text">real design system</span>.</h1>
+          <p class="hero-lede">
+            Answer a few questions in your terminal. kernic picks colors, fonts and spacing
+            that work together, then exports them as CSS or Tailwind tokens. No design
+            experience needed.
+          </p>
+          <div class="hero-actions">
+            <span class="install-pill"><span class="prompt">$</span> npm install -g kernic</span>
+            <a class="btn btn-primary" href="/docs">Get started</a>
+            <a class="btn btn-ghost hero-ghost" href="https://github.com/intentionaut/kernic" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+        <div class="hero-terminal">
+          <Terminal />
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="outputs">
+      <div class="container">
+        <h2 class="section-title">One system. Every output.</h2>
+        <p class="section-lede">
+          These aren't mockups. This site runs on <code>kernic export kernic-io</code>, run at
+          build time.
+        </p>
+        <div class="tabs" role="tablist" aria-label="Export formats">
+          {outputs.map((o, i) => (
+            <button
+              class="tab"
+              role="tab"
+              id={`tab-${o.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              aria-controls={`panel-${o.id}`}
+            >
+              {o.label}
+            </button>
+          ))}
+        </div>
+        {outputs.map((o, i) => (
+          <div
+            id={`panel-${o.id}`}
+            role="tabpanel"
+            aria-labelledby={`tab-${o.id}`}
+            hidden={i !== 0}
+          >
+            <CodeBlock code={o.code} lang={o.lang} />
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">What's in the box</h2>
+        <div class="card-grid">
+          {features.map((f) => (
+            <article class="card">
+              <h3>{f.title}</h3>
+              <p>{f.body}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Pick a vibe</h2>
+        <p class="section-lede">
+          This site uses <strong>neon</strong>. Here's its primary color scale, taken straight
+          from the generated system:
+        </p>
+        {ramps.map((ramp) => (
+          <div class="ramp-block">
+            <p class="ramp-name">--color-{ramp.name}-*</p>
+            <div class="swatch-row">
+              {ramp.steps.map((s) => (
+                <div class="swatch" style={`background: ${s.hex}`} title={`--color-${ramp.name}-${s.step}: ${s.hex}`}></div>
+              ))}
+            </div>
+          </div>
+        ))}
+        <div class="vibe-chips">
+          {vibes.map((v) => (
+            <span class="vibe-chip">{v}</span>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-panel">
+          <h2>Free forever, MIT licensed</h2>
+          <p>The CLI runs on your machine. Your design system is a plain JSON file you keep.</p>
+          <span class="install-pill install-pill-light"><span class="prompt">$</span> npx kernic</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<script is:inline>
+  document.addEventListener('click', (e) => {
+    const tab = e.target instanceof Element && e.target.closest('[role="tab"]');
+    if (!tab) return;
+    const list = tab.closest('[role="tablist"]');
+    for (const t of list.querySelectorAll('[role="tab"]')) {
+      t.setAttribute('aria-selected', String(t === tab));
+      document.getElementById(t.getAttribute('aria-controls'))?.toggleAttribute('hidden', t !== tab);
+    }
+  });
+</script>
+
+<style>
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

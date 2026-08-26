@@ -1,0 +1,45 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'kernic | One command to a real design system',
+  description =
+    'Answer a few questions in your terminal and kernic hands you a full design system: colors, fonts, spacing and gradients. Exports CSS vars, Tailwind tokens and JSON.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="theme-light light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+    <script is:inline>
+      const stored = localStorage.getItem('kernic-theme');
+      const theme = stored === 'dark' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('theme-light', theme === 'light');
+      document.documentElement.classList.toggle('theme-dark', theme === 'dark');
+    </script>
+  </head>
+  <body>
+    <slot />
+    <script is:inline>
+      const root = document.documentElement;
+      for (const btn of document.querySelectorAll('[data-theme-toggle]')) {
+        btn.addEventListener('click', () => {
+          const light = root.classList.toggle('theme-light');
+          root.classList.toggle('theme-dark', !light);
+          localStorage.setItem('kernic-theme', light ? 'light' : 'dark');
+        });
+      }
+    </script>
+  </body>
+</html>

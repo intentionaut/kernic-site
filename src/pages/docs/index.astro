@@ -1,0 +1,59 @@
+---
+import DocsLayout from '../../layouts/DocsLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+---
+
+<DocsLayout
+  title="Getting started with kernic"
+  description="Install kernic, generate your first design system, export tokens."
+  active="start"
+>
+  <h1>Getting started</h1>
+  <p>
+    kernic builds you a complete design system from the terminal: colors that work together,
+    font pairings, text sizes, corner radii and gradients. You answer a few questions. It saves
+    the result as plain JSON you own.
+  </p>
+
+  <h2>Install</h2>
+  <p>Requires Node 20+.</p>
+  <CodeBlock lang="shell" code={`npm install -g kernic\n# or run instantly:\nnpx kernic`} />
+
+  <h2>Generate a system</h2>
+  <p>The wizard walks you through it: name, overall style ("vibe"), palette tuning with live color swatches, fonts, corner rounding and text sizes:</p>
+  <CodeBlock lang="shell" code={`kernic\n# same, shorter:\nkn`} />
+  <p>
+    Systems are saved as plain JSON in <span class="inline-kbd">~/.config/kernic/systems/</span>.
+    No account, no cloud. Just files.
+  </p>
+
+  <h3>Skip the wizard</h3>
+  <CodeBlock lang="shell" code={`kernic create launch-page --vibe corporate-clean --yes`} />
+
+  <h2>Export tokens</h2>
+  <p>Every format goes to stdout, so you pipe it wherever it belongs:</p>
+  <CodeBlock
+    lang="shell"
+    code={`# Tailwind v4 app.css\nkernic export midnight-neon -f tailwind > src/app.css\n\n# Plain CSS vars anywhere\nkernic export midnight-neon -f css >> styles/global.css\n\n# Machine-readable tokens for tools\nkernic export midnight-neon -f json > design/tokens.json\n\n# All of them at once\nkernic export midnight-neon -f all -o ./design-system`}
+  />
+
+  <h2>Tune it visually or by hand</h2>
+  <p>
+    Every export is regenerated from the saved JSON system. Tweak the file directly, or open the
+    local visual editor:
+  </p>
+  <CodeBlock lang="shell" code={`kernic studio midnight-neon   # local web editor, 127.0.0.1 only`} />
+
+  <div class="docs-callout">
+    This very site is built that way: its <code>npm run build</code> runs
+    <code>kernic export kernic-io -f css &gt; src/styles/tokens.css</code> before Astro compiles.
+    No hand-written hex anywhere.
+  </div>
+
+  <h2>Next steps</h2>
+  <ul>
+    <li><a href="/docs/cli">Full CLI reference</a></li>
+    <li><a href="/docs/tokens">What's inside the token files</a></li>
+    <li><a href="/docs/agents">Point your AI coding agent at your system</a></li>
+  </ul>
+</DocsLayout>
