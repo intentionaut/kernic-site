@@ -1,0 +1,199 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import StudioDemo from '../components/StudioDemo.astro';
+import CodeBlock from '../components/CodeBlock.astro';
+---
+
+<Base
+  title="kernic studio | Tune your design system until it feels right"
+  description="Studio is kernic's visual editor. Pick a vibe, push controls like radius and type scale, and watch a live preview re-skin. Runs locally on your machine."
+>
+  <Header />
+
+  <main>
+    <section class="hero studio-hero">
+      <div class="hero-backdrop" aria-hidden="true"></div>
+      <div class="container studio-hero-inner">
+        <p class="studio-kicker">kernic studio</p>
+        <h1>Make it <span class="grad-text">feel</span> right.</h1>
+        <p class="studio-lede">
+          The terminal gets you a system that works. Studio is where you make it yours.
+          Drag controls, watch the preview change, export when it clicks.
+        </p>
+        <div class="studio-hero-actions">
+          <span class="install-pill"><span class="prompt">$</span> npx kernic studio</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">How it works</h2>
+        <p class="section-lede">Three steps. No account. Runs on your machine.</p>
+        <div class="step-grid">
+          <article class="step-card">
+            <span class="step-num">1</span>
+            <h3>Pick a vibe</h3>
+            <p>Start from a preset, or roll your own from a single seed color.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-num">2</span>
+            <h3>Push the controls</h3>
+            <p>Radius, type scale, dark mode. Every change updates the preview live.</p>
+          </article>
+          <article class="step-card">
+            <span class="step-num">3</span>
+            <h3>Export the tokens</h3>
+            <p>CSS, Tailwind, JSON, or design.md. One command pipes it into your build.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-plain">
+      <div class="container">
+        <div class="studio-demo-wrap">
+          <h2 class="section-title">Play with it now</h2>
+          <p class="section-lede">
+            This is a live preview, not a screenshot. Pick a vibe, flip to dark, drag
+            the radius. This is how the real editor feels.
+          </p>
+          <StudioDemo defaultVibe="fun" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">What Studio gives you</h2>
+        <div class="card-grid">
+          <article class="card">
+            <h3>Live OKLCH ramps</h3>
+            <p>See every color step as you tweak the seed. Harmony stays even, nothing muddies.</p>
+          </article>
+          <article class="card">
+            <h3>~2k Google Fonts</h3>
+            <p>Search from inside the editor. Pick heading, body, and mono. Offline fallback included.</p>
+          </article>
+          <article class="card">
+            <h3>Local-first</h3>
+            <p>Runs at 127.0.0.1 on your own machine. Your system is plain JSON that stays yours.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="cta-panel">
+          <h2>Try Studio</h2>
+          <p>One command. Your browser opens, the editor loads, you start tweaking.</p>
+          <div class="studio-code">
+            <CodeBlock code="npx kernic studio" lang="shell" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Base>
+
+<style>
+  .studio-hero {
+    padding: var(--space-6) 0 var(--space-4);
+    text-align: center;
+  }
+  .studio-hero-inner {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+  .studio-kicker {
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-primary-500);
+    margin-bottom: var(--space-1);
+  }
+  .studio-hero h1 {
+    font-size: clamp(var(--text-3xl), 6vw, var(--text-5xl));
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-1);
+  }
+  .studio-hero .studio-lede {
+    font-size: var(--text-lg);
+    color: var(--muted-text);
+    max-width: 48ch;
+    margin: 0 auto var(--space-2);
+    line-height: 1.55;
+  }
+  .studio-hero-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .step-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-1-5);
+    margin-top: var(--space-1);
+  }
+  .step-card {
+    padding: var(--space-1-5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    background: var(--surface);
+  }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: var(--color-primary-100);
+    color: var(--color-primary-700);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    margin-bottom: var(--space-1);
+  }
+  .step-card h3 {
+    font-family: var(--font-heading);
+    font-size: var(--text-base);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .step-card p {
+    font-size: var(--text-sm);
+    color: var(--muted-text);
+    line-height: 1.55;
+  }
+
+  .section-plain {
+    background: color-mix(in srgb, var(--surface) 35%, transparent);
+    border-block: 1px solid var(--border);
+  }
+  .studio-demo-wrap {
+    max-width: 920px;
+    margin-inline: auto;
+  }
+  .studio-demo-wrap .section-lede {
+    max-width: 46ch;
+    margin-inline: auto;
+  }
+
+  .studio-code {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 900px) {
+    .step-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

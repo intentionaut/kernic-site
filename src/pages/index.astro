@@ -4,8 +4,8 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import Terminal from '../components/Terminal.astro';
 import CodeBlock from '../components/CodeBlock.astro';
+import StudioDemo from '../components/StudioDemo.astro';
 import { readFileSync } from 'node:fs';
-import { VIBES } from '../data/vibes';
 import tokensCss from '../styles/tokens.css?raw';
 import tailwindOut from '../generated/tailwind.css?raw';
 import jsonOut from '../generated/tokens.json?raw';
@@ -69,20 +69,6 @@ const outputs = [
     code: designMd,
   },
 ];
-
-const radiusStart: Record<string, number> = { sharp: 2, soft: 8, round: 14, pill: 18 };
-
-const vibeData = VIBES.map((v) => ({
-  id: v.id,
-  label: v.label,
-  description: v.description,
-  primarySeed: v.primarySeed,
-  accentSeed: v.accentSeed,
-  dark: v.dark,
-  radiusPx: radiusStart[v.radius],
-  headingFont: v.headingFont,
-  bodyFont: v.bodyFont,
-}));
 
 const features = [
   {
@@ -196,63 +182,7 @@ const features = [
           Eight presets, each one real inside kernic. Click one and watch the preview change. Then push the controls. This site runs on <strong>corporate</strong>.
         </p>
 
-        <div class="studio-panel">
-          <div class="sp-rail" role="group" aria-label="Vibe presets">
-            {VIBES.map((v) => (
-              <button
-                class="sp-vibe"
-                type="button"
-                data-vibe={v.id}
-                aria-pressed={v.id === 'corporate' ? 'true' : 'false'}
-              >
-                <span class="sp-swatches" aria-hidden="true">
-                  <i style={`background:${v.primarySeed}`}></i>
-                  <i style={`background:${v.accentSeed}`}></i>
-                </span>
-                {v.label}
-                {v.id === 'corporate' && <span class="vibe-badge">this site</span>}
-              </button>
-            ))}
-          </div>
-
-          <div class="sp-main">
-            <div class="sp-stage" id="sp-stage" data-mode="light">
-              <div class="sp-nav">
-                <span class="sp-brand">kernic</span>
-                <span class="sp-links"><i>Docs</i><i>GitHub</i></span>
-              </div>
-              <div class="sp-hero">
-                <p class="sp-kicker">Design system</p>
-                <p class="sp-headline">Vibe coding gets a facelift.</p>
-                <p class="sp-copy">
-                  Color, type and spacing that work together. Generated once,
-                  applied everywhere.
-                </p>
-                <div class="sp-row">
-                  <span class="sp-btn">Get started</span>
-                  <span class="sp-chip"><i class="sp-dot"></i>accent</span>
-                </div>
-              </div>
-              <p class="sp-status" id="sp-status"></p>
-            </div>
-
-            <div class="sp-controls">
-              <button class="sp-ctl" id="sp-mode" type="button" aria-pressed="false">Dark</button>
-              <label class="sp-ctl sp-range">
-                Radius
-                <input id="sp-radius" type="range" min="0" max="20" step="1" value="8" aria-label="Corner radius" />
-              </label>
-              <label class="sp-ctl">
-                Type scale
-                <select id="sp-scale" aria-label="Type scale">
-                  <option value="0.85">Compact</option>
-                  <option value="1" selected>Default</option>
-                  <option value="1.15">Roomy</option>
-                </select>
-              </label>
-            </div>
-          </div>
-        </div>
+        <StudioDemo />
 
         <div class="sp-footnote">
           <p>
@@ -266,8 +196,6 @@ const features = [
         </div>
       </div>
     </section>
-
-    <script type="application/json" id="sp-data" set:html={JSON.stringify(vibeData)} />
 
     <section class="section">
       <div class="container">
@@ -295,51 +223,6 @@ const features = [
   });
 </script>
 
-<script is:inline>
-  (() => {
-    const DATA = JSON.parse(document.getElementById('sp-data').textContent);
-    const stage = document.getElementById('sp-stage');
-    const status = document.getElementById('sp-status');
-    const modeBtn = document.getElementById('sp-mode');
-    const radius = document.getElementById('sp-radius');
-    const scaleSel = document.getElementById('sp-scale');
-    const rail = [...document.querySelectorAll('.sp-vibe')];
-
-    function apply(id) {
-      const v = DATA.find((d) => d.id === id);
-      if (!v) return;
-      stage.style.setProperty('--sp-primary', v.primarySeed);
-      stage.style.setProperty('--sp-accent', v.accentSeed);
-      stage.style.setProperty('--sp-radius', v.radiusPx + 'px');
-      stage.style.setProperty('--sp-font-h', `'${v.headingFont}', sans-serif`);
-      stage.style.setProperty('--sp-font-b', `'${v.bodyFont}', sans-serif`);
-      setMode(v.dark);
-      radius.value = v.radiusPx;
-      scaleSel.value = '1';
-      stage.style.setProperty('--sp-scale', '1');
-      status.textContent = `${v.label} — ${v.description}`;
-      for (const b of rail) b.setAttribute('aria-pressed', String(b.dataset.vibe === id));
-    }
-
-    function setMode(dark) {
-      stage.dataset.mode = dark ? 'dark' : 'light';
-      modeBtn.textContent = dark ? 'Light' : 'Dark';
-      modeBtn.setAttribute('aria-pressed', String(dark));
-    }
-
-    for (const b of rail) b.addEventListener('click', () => apply(b.dataset.vibe));
-    modeBtn.addEventListener('click', () => setMode(stage.dataset.mode !== 'dark'));
-    radius.addEventListener('input', () => {
-      stage.style.setProperty('--sp-radius', radius.value + 'px');
-    });
-    scaleSel.addEventListener('change', () => {
-      stage.style.setProperty('--sp-scale', scaleSel.value);
-    });
-
-    apply('corporate');
-  })();
-</script>
-
 <style>
   .hero-grid {
     display: grid;
@@ -352,226 +235,6 @@ const features = [
     .hero-grid {
       grid-template-columns: 1fr;
     }
-  }
-
-  .studio-panel {
-    display: grid;
-    grid-template-columns: 230px minmax(0, 1fr);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-xl);
-    overflow: hidden;
-    margin-top: var(--space-1-5);
-    background: color-mix(in srgb, var(--surface) 40%, transparent);
-  }
-
-  .sp-rail {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 0.6rem;
-    border-right: 1px solid var(--border);
-  }
-
-  .sp-vibe {
-    display: flex;
-    align-items: center;
-    gap: 0.55rem;
-    padding: 0.48rem 0.6rem;
-    border: 0;
-    background: transparent;
-    border-radius: var(--radius-md);
-    font: inherit;
-    font-size: var(--text-sm);
-    color: var(--text);
-    cursor: pointer;
-    text-align: left;
-  }
-
-  .sp-vibe:hover {
-    background: color-mix(in srgb, var(--color-neutral-200) 45%, transparent);
-  }
-
-  .sp-vibe[aria-pressed='true'] {
-    background: color-mix(in srgb, var(--color-primary-100) 60%, transparent);
-    font-weight: 600;
-  }
-
-  .sp-swatches {
-    display: inline-flex;
-    flex: none;
-  }
-
-  .sp-swatches i {
-    width: 0.85rem;
-    height: 0.85rem;
-    border-radius: 999px;
-    border: 1.5px solid rgba(255, 255, 255, 0.55);
-  }
-
-  .sp-swatches i + i {
-    margin-left: -0.35rem;
-  }
-
-  .vibe-badge {
-    margin-left: auto;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #fff;
-    background: #e74ea9;
-    padding: 0.12rem 0.45rem;
-    border-radius: 999px;
-    white-space: nowrap;
-  }
-
-  .sp-main {
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-  }
-
-  .sp-stage {
-    --sp-primary: #2563eb;
-    --sp-accent: #0ea5e9;
-    --sp-radius: 8px;
-    --sp-scale: 1;
-    --sp-font-h: 'Inter', sans-serif;
-    --sp-font-b: 'Inter', sans-serif;
-    flex: 1;
-    padding: clamp(1.2rem, 3vw, 2.2rem);
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.9rem, 2vw, 1.4rem);
-    background: #fbfdff;
-    color: #141a1d;
-    transition: background 250ms ease, color 250ms ease;
-  }
-
-  .sp-stage[data-mode='dark'] {
-    background: #10181b;
-    color: #eef4f7;
-  }
-
-  .sp-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-  }
-
-  .sp-brand {
-    font-family: var(--sp-font-h);
-    font-weight: 600;
-    font-size: calc(var(--sp-scale) * 1rem);
-    color: var(--sp-primary);
-  }
-
-  .sp-links {
-    font-size: calc(var(--sp-scale) * 0.78rem);
-    opacity: 0.65;
-  }
-
-  .sp-links i + i {
-    font-style: normal;
-    margin-left: 0.9rem;
-  }
-
-  .sp-kicker {
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    font-size: calc(var(--sp-scale) * 0.66rem);
-    font-weight: 600;
-    color: var(--sp-accent);
-    margin-bottom: 0.35rem;
-  }
-
-  .sp-headline {
-    font-family: var(--sp-font-h);
-    font-weight: 600;
-    line-height: 1.08;
-    letter-spacing: -0.02em;
-    font-size: calc(var(--sp-scale) * 2.1rem);
-    max-width: 18ch;
-  }
-
-  .sp-copy {
-    font-family: var(--sp-font-b);
-    font-size: calc(var(--sp-scale) * 0.92rem);
-    line-height: 1.55;
-    opacity: 0.78;
-    max-width: 44ch;
-  }
-
-  .sp-row {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-    flex-wrap: wrap;
-    margin-top: 0.25rem;
-  }
-
-  .sp-btn {
-    font-family: var(--sp-font-b);
-    font-weight: 600;
-    font-size: calc(var(--sp-scale) * 0.82rem);
-    color: #fff;
-    background: var(--sp-primary);
-    padding: 0.42em 1.05em;
-    border-radius: var(--sp-radius);
-  }
-
-  .sp-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: var(--sp-font-mono, ui-monospace, monospace);
-    font-size: calc(var(--sp-scale) * 0.72rem);
-    border: 1px solid currentColor;
-    opacity: 0.75;
-    padding: 0.3em 0.8em;
-    border-radius: var(--sp-radius);
-  }
-
-  .sp-dot {
-    width: 0.6rem;
-    height: 0.6rem;
-    border-radius: 999px;
-    background: var(--sp-accent);
-  }
-
-  .sp-status {
-    margin-top: auto;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    opacity: 0.55;
-  }
-
-  .sp-controls {
-    display: flex;
-    align-items: center;
-    gap: 1.1rem;
-    flex-wrap: wrap;
-    padding: 0.7rem clamp(1.2rem, 3vw, 2.2rem);
-    border-top: 1px solid var(--border);
-  }
-
-  .sp-ctl {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font: inherit;
-    font-size: var(--text-sm);
-    color: var(--text);
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    padding: 0.32rem 0.7rem;
-    cursor: pointer;
-  }
-
-  .sp-range input {
-    accent-color: var(--color-primary-500);
-    width: 7rem;
   }
 
   .sp-footnote {
@@ -588,24 +251,5 @@ const features = [
     color: var(--muted-text);
     max-width: 58ch;
     line-height: 1.55;
-  }
-
-  @media (max-width: 900px) {
-    .studio-panel {
-      grid-template-columns: 1fr;
-    }
-    .sp-rail {
-      flex-direction: row;
-      overflow-x: auto;
-      border-right: 0;
-      border-bottom: 1px solid var(--border);
-    }
-    .sp-vibe {
-      white-space: nowrap;
-    }
-    .vibe-badge {
-      position: static;
-      margin-left: 0.15rem;
-    }
   }
 </style>
