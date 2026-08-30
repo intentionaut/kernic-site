@@ -28,6 +28,26 @@ import CodeBlock from '../components/CodeBlock.astro';
       </div>
     </section>
 
+    <section class="studio-shot-section">
+      <div class="container">
+        <figure class="studio-shot">
+          <img
+            src="/studio-screenshot.jpg"
+            width="1299"
+            height="924"
+            loading="eager"
+            decoding="async"
+            alt="kernic Studio running locally. A sidebar lists eight themes with the Neon theme selected, showing looks called Stripe Canvas, Checkout Light, Glow Pop, Aurora Pay, Citrus Circuit and Sunset Protocol. The main panel shows generated color ramps above a live preview of a landing page in dark mode, with a gradient headline and gradient buttons."
+          />
+          <figcaption>
+            Studio, running on your machine. Pick a look on the left, watch the whole
+            preview re-skin on the right, then save it back to the same JSON file the
+            CLI uses.
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
     <section class="section">
       <div class="container">
         <h2 class="section-title">How it works</h2>
@@ -195,5 +215,35 @@ import CodeBlock from '../components/CodeBlock.astro';
     .step-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .studio-shot-section {
+    padding: 0 0 1rem;
+  }
+
+  .studio-shot {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .studio-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow:
+      0 1px 2px rgb(0 0 0 / 0.16),
+      0 24px 60px -20px rgb(0 0 0 / 0.42);
+  }
+
+  .studio-shot figcaption {
+    max-width: 62ch;
+    margin: 0 auto;
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--muted-text);
   }
 </style>
