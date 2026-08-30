@@ -33,11 +33,18 @@ import CodeBlock from '../../components/CodeBlock.astro';
   <h2>Or go live over MCP</h2>
   <CodeBlock lang="shell" code={`claude mcp add kernic -- npx kernic mcp`} />
   <ul>
+    <li><code>apply_to_project</code>: write the system into the project you are working in, and get the line to paste into your agent file</li>
+    <li><code>create_system</code>: make a new system without leaving the session</li>
+    <li><code>list_looks</code>: the 33 finished looks, colors and fonts already paired</li>
     <li><code>list_systems</code>: discover saved systems</li>
     <li><code>get_system</code>: full spec of one system</li>
     <li><code>get_tokens</code>: tokens in design-md, css, tailwind, fonts, dtcg or json format</li>
-    <li><code>list_vibes</code>: available vibe presets</li>
+    <li><code>list_vibes</code>: the eight broad styles</li>
   </ul>
+  <p>
+    <code>get_tokens</code> puts tokens in the conversation. <code>apply_to_project</code> puts
+    them in your project, which is what makes them stick across future sessions.
+  </p>
 
   <div class="docs-callout">
     Proof it works: you're looking at it. This site was built by an agent working strictly from
