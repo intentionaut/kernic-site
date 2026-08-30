@@ -178,16 +178,23 @@ await cp(join(kernicRoot, 'studio', 'app.css'), join(outDir, 'app.css'));
 
 // 4. Studio's client, with the save path adapted for the web.
 let appJs = await readFile(join(kernicRoot, 'studio', 'app.js'), 'utf8');
+// Nothing is being saved, so an empty name must not block the install prompt.
+appJs = patch(
+  appJs,
+  'if (!state.name) return setStatus("Name your system first", "err");',
+  'if (!state.name) state.name = "your system";',
+  'the empty-name guard'
+);
 appJs = patch(
   appJs,
   'setStatus(`Saved "${name}" ✓ — visible in \\`kernic list\\``, "ok");',
-  'setStatus(`Downloaded "${name}.json" ✓ — open it with \\`kernic\\``, "ok");',
+  'setStatus(`Keep "${name}": npm install -g kernic`, "ok");',
   'the save status line'
 );
 appJs = patch(
   appJs,
   'toast(`Saved "${name}"`);',
-  'toast(`Downloaded "${name}.json"`);',
+  'toast("npm install -g kernic");',
   'the save toast'
 );
 await writeFile(join(outDir, 'app.js'), appJs, 'utf8');
@@ -205,7 +212,7 @@ html = patch(html, 'href="/app.css"', 'href="./app.css"', 'the stylesheet link')
 html = patch(
   html,
   '<button id="save" class="btn primary wide">Save system</button>',
-  '<button id="save" class="btn primary wide">Download system</button>',
+  '<button id="save" class="btn primary wide">Get kernic</button>',
   'the save button'
 );
 await writeFile(join(outDir, 'index.html'), html, 'utf8');

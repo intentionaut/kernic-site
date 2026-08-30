@@ -850,7 +850,7 @@ function buildSystemPayload() {
 
 async function save() {
   state.name = $("sysname").value.trim();
-  if (!state.name) return setStatus("Name your system first", "err");
+  if (!state.name) state.name = "your system";
   try {
     const { name } = await api("/api/save", {
       method: "POST",
@@ -858,8 +858,8 @@ async function save() {
       body: JSON.stringify(buildSystemPayload()),
     });
     state.name = name;
-    setStatus(`Downloaded "${name}.json" ✓ — open it with \`kernic\``, "ok");
-    toast(`Downloaded "${name}.json"`);
+    setStatus(`Keep "${name}": npm install -g kernic`, "ok");
+    toast("npm install -g kernic");
   } catch (e) {
     setStatus(e.message, "err");
   }

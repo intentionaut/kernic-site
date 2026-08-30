@@ -4,9 +4,11 @@
  * `kernic studio` normally talks to a Node server on 127.0.0.1. Here the same
  * client runs against kernic's real logic compiled to a browser bundle, with
  * fetch intercepted for /api/* so app.js needs no knowledge that it is on the
- * web. Anything genuinely impossible in a browser — reading and writing
- * ~/.config/kernic — is handled honestly rather than faked: saving downloads
- * the file instead.
+ * web.
+ *
+ * This build hands over no files. Tuning a system here is a demo; the tokens
+ * are the product, so saving, reopening and exporting stay in the CLI. The
+ * save route acknowledges the click and the client prompts for the install.
  *
  * Generated alongside this file by scripts/build-studio-embed.mjs.
  */
@@ -31,25 +33,6 @@ function json(body, status = 200) {
   });
 }
 
-/**
- * The web version cannot write to your home directory, so "save" hands you
- * the file. It is the same JSON `kernic studio` would have written, so it
- * drops straight into ~/.config/kernic/systems/.
- */
-function download(system) {
-  const name = system?.name || 'design-system';
-  const blob = new Blob([JSON.stringify(system, null, 2) + '\n'], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `${name}.json`;
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 30_000);
-  return name;
-}
-
 async function route(url, init) {
   const path = url.pathname;
   const method = (init?.method ?? 'GET').toUpperCase();
@@ -67,7 +50,11 @@ async function route(url, init) {
     return json(await apiFonts(q, limit, { getFontCatalog, rankFonts }));
   }
 
-  if (method === 'POST' && path === '/api/save') return json({ name: download(body) });
+  // Deliberately writes nothing and returns no tokens. The client turns this
+  // into the install prompt; a system is kept by running kernic locally.
+  if (method === 'POST' && path === '/api/save') {
+    return json({ name: body?.name || 'your system' });
+  }
 
   // Loading a saved system means reading your machine. Say so plainly rather
   // than failing in a way the client would report as a server error.
