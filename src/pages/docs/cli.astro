@@ -3,8 +3,8 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 
 const commands: [string, string][] = [
-  ['kernic', 'Interactive wizard'],
-  ['kn', 'Alias for kernic'],
+  ['kernic', 'Open Studio, the visual editor'],
+  ['kernic wizard', 'Walk through it in the terminal instead'],
   ['kernic create <name> [--vibe <id>]', 'Create a new system non-interactively'],
   ['kernic list', 'List saved systems'],
   ['kernic show <name>', 'Full spec + swatches'],
@@ -12,6 +12,7 @@ const commands: [string, string][] = [
   ['kernic studio [name]', 'Local visual editor in your browser'],
   ['kernic export <name> -f <format>', 'Output tokens to stdout'],
   ['kernic context <name> -o ./', 'Write design.md + W3C tokens.json for agents'],
+  ['kernic apps', 'Every project using a system, and what has fallen behind'],
   ['kernic mcp', 'MCP server for coding tools'],
   ['kernic delete <name>', 'Remove a system'],
 ];
@@ -30,8 +31,9 @@ const vibes = [
 const formats: [string, string][] = [
   ['css', 'Plain CSS custom properties + Google Fonts imports'],
   ['tailwind', 'Tailwind v4 @theme block'],
-  ['json', 'W3C DTCG-style token JSON'],
+  ['json', 'The raw kernic system file'],
   ['fonts', 'Google Fonts @import statements'],
+  ['dtcg', 'W3C DTCG-style design tokens'],
   ['design-md', 'design.md agent context'],
   ['all', 'Every format, written with -o ./design-system'],
 ];

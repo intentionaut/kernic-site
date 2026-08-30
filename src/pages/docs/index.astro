@@ -20,15 +20,20 @@ import CodeBlock from '../../components/CodeBlock.astro';
   <CodeBlock lang="shell" code={`npm install -g kernic\n# or run instantly:\nnpx kernic`} />
 
   <h2>Generate a system</h2>
-  <p>The wizard walks you through it: name, overall style ("vibe"), palette tuning with live color swatches, fonts, corner rounding and text sizes:</p>
-  <CodeBlock lang="shell" code={`kernic\n# same, shorter:\nkn`} />
+  <p>
+    Running <span class="inline-kbd">kernic</span> opens Studio, the visual editor, in your
+    browser. Prefer the terminal? <span class="inline-kbd">kernic wizard</span> walks you
+    through the same thing: name, overall style ("vibe"), palette tuning with live color
+    swatches, fonts, corner rounding and text sizes.
+  </p>
+  <CodeBlock lang="shell" code={`kernic\n# or stay in the terminal:\nkernic wizard`} />
   <p>
     Systems are saved as plain JSON in <span class="inline-kbd">~/.config/kernic/systems/</span>.
     No account, no cloud. Just files.
   </p>
 
   <h3>Skip the wizard</h3>
-  <CodeBlock lang="shell" code={`kernic create launch-page --vibe corporate-clean --yes`} />
+  <CodeBlock lang="shell" code={`kernic create launch-page --vibe corporate --yes`} />
 
   <h2>Export tokens</h2>
   <p>Every format prints to stdout. Pipe it wherever it belongs:</p>
