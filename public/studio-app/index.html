@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kernic studio</title>
+<link rel="stylesheet" href="./app.css">
+</head>
+<body>
+<div id="app">
+  <aside id="sidebar">
+    <header class="side-head">
+      <span class="logo">kernic<span class="logo-dot">◆</span></span>
+      <span class="tagline">studio</span>
+    </header>
+
+    <section class="group">
+      <label class="group-label" for="sysname">System name</label>
+      <input id="sysname" type="text" spellcheck="false" placeholder="my-brand">
+    </section>
+
+    <section class="group">
+      <div class="group-label">Theme</div>
+      <div id="vibes" class="chip-row"></div>
+    </section>
+
+    <section class="group" id="looksSection">
+      <div class="group-label" id="looksLabel">Looks <span class="hint">one click, done</span></div>
+      <div id="looksGrid"></div>
+      <button id="shuffle" class="btn ghost small">✦ Surprise me</button>
+      <div id="historySection" style="display:none">
+        <div class="group-label">Recent shuffles <span class="hint">this session only</span></div>
+        <div id="historyStrip"></div>
+      </div>
+    </section>
+
+    <details id="fineTune">
+      <summary>Fine-tune <span class="hint">for pros</span></summary>
+
+    <section class="group">
+      <div class="group-label">Primary hue <span id="hueVal" class="hint"></span></div>
+      <input id="hue" type="range" min="0" max="359" value="220">
+      <div class="row">
+        <button id="randomize" class="btn ghost small">Randomize</button>
+        <button id="rerollAccent" class="btn ghost small">Reroll accent</button>
+      </div>
+    </section>
+
+    <section class="group">
+      <label class="group-label" for="harmony">Accent harmony</label>
+      <select id="harmony">
+        <option value="analogous">Analogous · +40° safe & cohesive</option>
+        <option value="complementary">Complementary · +180° punchy</option>
+        <option value="triadic">Triadic · +120° playful</option>
+        <option value="monochrome">Monochrome · quiet luxury</option>
+      </select>
+    </section>
+
+    <section class="group">
+      <div class="group-label">Neutral tint</div>
+      <div id="tintRow" class="seg">
+        <button data-tint="match">Match</button>
+        <button data-tint="warm">Warm</button>
+        <button data-tint="cool">Cool</button>
+        <button data-tint="pure">Pure</button>
+      </div>
+    </section>
+
+    <section class="group">
+      <label class="group-label" for="fHeading">Heading font</label>
+      <div class="combo">
+        <input id="fHeading" type="text" role="combobox" aria-expanded="false" aria-controls="fHeadingList"
+               aria-autocomplete="list" aria-haspopup="listbox" autocomplete="off" spellcheck="false"
+               placeholder="Search Google Fonts…">
+        <div class="combo-pop" id="fHeadingPop" hidden>
+          <ul class="combo-list" id="fHeadingList" role="listbox" aria-label="Heading font results"></ul>
+          <div class="combo-meta" id="fHeadingMeta" hidden></div>
+        </div>
+      </div>
+
+      <label class="group-label" for="fBody">Body font</label>
+      <div class="combo">
+        <input id="fBody" type="text" role="combobox" aria-expanded="false" aria-controls="fBodyList"
+               aria-autocomplete="list" aria-haspopup="listbox" autocomplete="off" spellcheck="false"
+               placeholder="Search Google Fonts…">
+        <div class="combo-pop" id="fBodyPop" hidden>
+          <ul class="combo-list" id="fBodyList" role="listbox" aria-label="Body font results"></ul>
+          <div class="combo-meta" id="fBodyMeta" hidden></div>
+        </div>
+      </div>
+
+      <label class="group-label" for="fMono">Mono font</label>
+      <div class="combo">
+        <input id="fMono" type="text" role="combobox" aria-expanded="false" aria-controls="fMonoList"
+               aria-autocomplete="list" aria-haspopup="listbox" autocomplete="off" spellcheck="false"
+               placeholder="Search Google Fonts…">
+        <div class="combo-pop" id="fMonoPop" hidden>
+          <ul class="combo-list" id="fMonoList" role="listbox" aria-label="Mono font results"></ul>
+          <div class="combo-meta" id="fMonoMeta" hidden></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="group">
+      <div class="group-label">Corners</div>
+      <div id="radiusRow" class="seg"></div>
+      <label class="group-label" for="ratio">Type scale ratio</label>
+      <select id="ratio"></select>
+    </section>
+
+    </details>
+
+    <footer class="side-foot">
+      <button id="save" class="btn primary wide">Download system</button>
+      <div id="status" class="status"></div>
+    </footer>
+  </aside>
+
+  <main id="main">
+    <div id="previewBar">
+      <span class="bar-title">Live preview</span>
+      <div class="mode-toggle" id="modeRow">
+        <button data-mode="light" class="on">☀ Light</button>
+        <button data-mode="dark">☾ Dark</button>
+      </div>
+    </div>
+    <div id="ramps"></div>
+    <div id="preview" dir="ltr">
+      <nav class="pv-nav">
+        <span class="pv-brand">Acme</span>
+        <span class="pv-links"><a>Product</a><a>Pricing</a><a>Docs</a></span>
+        <button class="pv-btn pv-primary pv-sm">Sign in</button>
+      </nav>
+      <section class="pv-hero">
+        <h1 class="pv-h1">Ship software that looks <span class="pv-grad-word">intentional.</span></h1>
+        <p class="pv-sub">One design system, tuned once, applied everywhere. No default-blue buttons ever again.</p>
+        <div class="pv-row">
+          <button class="pv-btn pv-primary">Get started free</button>
+          <button class="pv-btn pv-ghost">See how it works</button>
+        </div>
+      </section>
+
+      <section class="pv-section">
+        <p class="pv-label">Buttons &amp; badges</p>
+        <div class="pv-row left wrap">
+          <button class="pv-btn pv-primary">Primary action</button>
+          <button class="pv-btn pv-ghost">Secondary</button>
+          <button class="pv-btn pv-primary pv-sm">Small</button>
+          <button class="pv-btn pv-primary" disabled>Disabled</button>
+        </div>
+        <div class="pv-row left wrap">
+          <span class="pv-badge solid">New</span>
+          <span class="pv-badge accent">Beta</span>
+          <span class="pv-badge outline">v2.4.1</span>
+          <code class="pv-inline-code">npm install acme</code>
+        </div>
+      </section>
+
+      <section class="pv-stats-band">
+        <div class="pv-stat"><span class="pv-stat-num">99.98%</span><span class="pv-stat-cap">uptime SLA</span></div>
+        <div class="pv-stat"><span class="pv-stat-num">12k</span><span class="pv-stat-cap">teams shipping</span></div>
+        <div class="pv-stat"><span class="pv-stat-num">4.9★</span><span class="pv-stat-cap">avg. rating</span></div>
+        <div class="pv-stat"><span class="pv-stat-num">38ms</span><span class="pv-stat-cap">median latency</span></div>
+      </section>
+
+      <section class="pv-cards">
+        <article class="pv-card"><div class="pv-thumb t1"></div><h3>Tokens as JSON</h3><p>Plain files you own. Version them, diff them, share them.</p><span class="pv-chip">core</span></article>
+        <article class="pv-card"><div class="pv-thumb t2"></div><h3>Perceptual ramps</h3><p>OKLCH color with gamut fitting from 50 to 950.</p><span class="pv-chip">color</span></article>
+        <article class="pv-card"><div class="pv-thumb t3"></div><h3>Type that breathes</h3><p>Scales built on musical ratios, not vibes alone.</p><span class="pv-chip">type</span></article>
+      </section>
+
+      <section class="pv-form">
+        <h2 class="pv-h2">Stay in the loop</h2>
+        <div class="pv-alert ok"><div><p class="pv-alert-title">Changes published</p><p class="pv-alert-body">Your update is live for every workspace member.</p></div></div>
+        <div class="pv-grid-2">
+          <div class="pv-field"><label>Email</label><input type="text" placeholder="you@studio.dev"></div>
+          <div class="pv-field has-error"><label>Team name</label><input type="text" value="A"><p class="pv-error-msg">Must be at least 3 characters.</p></div>
+        </div>
+        <div class="pv-field"><label>Note</label><textarea rows="2"></textarea><p class="pv-hint">We'll only use this to follow up.</p></div>
+        <button class="pv-btn pv-primary">Subscribe</button>
+      </section>
+
+      <section class="pv-section">
+        <p class="pv-label">Pricing</p>
+        <div class="pv-pricing">
+          <article class="pv-tier"><h3>Hobby</h3><div class="pv-price">$0<span>/mo</span></div><ul><li>1 project</li><li>Community support</li><li>Basic analytics</li></ul><button class="pv-btn pv-ghost wide">Choose Hobby</button></article>
+          <article class="pv-tier featured"><span class="pv-flag">Most popular</span><h3>Studio</h3><div class="pv-price">$20<span>/mo</span></div><ul><li>Unlimited projects</li><li>Priority support</li><li>Advanced analytics</li></ul><button class="pv-btn pv-primary wide">Choose Studio</button></article>
+          <article class="pv-tier"><h3>Agency</h3><div class="pv-price">$79<span>/mo</span></div><ul><li>Client workspaces</li><li>Dedicated manager</li><li>SLA &amp; SSO</li></ul><button class="pv-btn pv-ghost wide">Choose Agency</button></article>
+        </div>
+      </section>
+
+      <section class="pv-section">
+        <p class="pv-label">Type hierarchy</p>
+        <div class="pv-type-row"><span class="pv-tag">H1</span><span class="t-h1">Ship software that looks intentional</span></div>
+        <div class="pv-type-row"><span class="pv-tag">H2</span><span class="t-h2">Team activity this week</span></div>
+        <div class="pv-type-row"><span class="pv-tag">H3</span><span class="t-h3">Overdue items need owners</span></div>
+        <div class="pv-type-row"><span class="pv-tag">Body</span><span class="t-body">You have four tasks due before Friday. Assign an owner to each one so nothing slips through the cracks.</span></div>
+        <div class="pv-type-row"><span class="pv-tag">Muted</span><span class="t-muted">Last synced 3 minutes ago from your connected workspace.</span></div>
+        <div class="pv-type-row"><span class="pv-tag">Caption</span><span class="t-caption">Updated automatically every 15 minutes</span></div>
+        <div class="pv-type-row"><span class="pv-tag">Overline</span><span class="t-overline">Sprint 14</span></div>
+        <div class="pv-type-row"><span class="pv-tag">Link</span><a class="t-link">View full changelog</a></div>
+        <div class="pv-type-row"><span class="pv-tag">Code</span><code class="t-code">const kerning = 0.02em;</code></div>
+      </section>
+
+      <section class="pv-section">
+        <p class="pv-label">Inverse surface</p>
+        <div class="pv-dark">
+          <h4>Weekly digest</h4>
+          <p>A dark surface panel for contrast checks — secondary copy sits at reduced opacity over the deepest neutral.</p>
+          <button class="pv-btn pv-accent">Open digest</button>
+        </div>
+      </section>
+
+      <footer class="pv-footer">
+        <span>© 2026 Acme Inc.</span>
+        <span>Built with kernic</span>
+      </footer>
+    </div>
+  </main>
+</div>
+<div id="toast"></div>
+<script type="module" src="./api-shim.js"></script>
+<script defer src="./app.js"></script>
+</body>
+</html>

@@ -10,12 +10,16 @@
     "dev": "npm run tokens && astro dev",
     "build": "npm run tokens && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "studio:embed": "node scripts/build-studio-embed.mjs"
   },
   "dependencies": {
     "astro": "^7.2.7"
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }

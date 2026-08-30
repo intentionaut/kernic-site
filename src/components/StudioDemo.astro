@@ -106,7 +106,7 @@ const dataId = `sp-data-${compact ? 'sm' : 'lg'}`;
       const scaleSel = document.getElementById(scaleId);
       if (!stage || !status || !modeBtn || !radius || !scaleSel) return;
 
-      const rail = [...stage.closest('.studio-panel')!.querySelectorAll('.sp-vibe')];
+      const rail = [...stage.closest('.studio-panel').querySelectorAll('.sp-vibe')];
 
       function apply(id) {
         const v = DATA.find((d) => d.id === id);
