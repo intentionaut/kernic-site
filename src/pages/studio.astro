@@ -210,6 +210,12 @@ import CodeBlock from '../components/CodeBlock.astro';
     padding: 0 0 1rem;
   }
 
+  @media (max-width: 720px) {
+    .studio-embed iframe {
+      height: min(78vh, 640px);
+    }
+  }
+
   .studio-embed {
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);

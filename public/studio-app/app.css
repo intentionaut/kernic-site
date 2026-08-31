@@ -582,3 +582,22 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
   box-shadow: 0 10px 26px -16px color-mix(in srgb, var(--color-primary-700) 55%, transparent);
 }
 #preview[data-vibe="earthy"] .pv-h1 { font-weight: 500; }
+
+
+/* ---------- narrow screens (phone, or the site embed on one) ----------
+   The desktop layout is a fixed two-pane grid; at phone width that crushed
+   the preview clean off the page. Stack instead: controls on top, scrolling
+   in their own half, live preview below in the other. */
+@media (max-width: 720px) {
+  #app {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 55%) minmax(0, 1fr);
+  }
+  #sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--ui-border);
+  }
+  #looksGrid {
+    grid-template-columns: 1fr;
+  }
+}
