@@ -636,4 +636,14 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
     flex: 1 1 44%;
     padding-left: 14px;
   }
+  /* Multi-column bands: one column at phone width. Measured offenders were
+     .pv-cards (419px) and .pv-pricing (467px) inside a 326px pane. */
+  .pv-cards,
+  .pv-pricing {
+    grid-template-columns: 1fr;
+  }
+  /* Ramp swatches are flex:1 but will not shrink past their label. */
+  .swatch {
+    min-width: 0;
+  }
 }
