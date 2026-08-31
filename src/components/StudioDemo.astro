@@ -300,13 +300,13 @@ const dataId = `sp-data-${compact ? 'sm' : 'lg'}`;
     font-weight: 600;
     line-height: 1.08;
     letter-spacing: -0.02em;
-    font-size: calc(var(--sp-scale) * 2.1rem);
+    font-size: max(1.05rem, calc(var(--sp-scale) * 2.1rem));
     max-width: 18ch;
   }
 
   .sp-copy {
     font-family: var(--sp-font-b);
-    font-size: calc(var(--sp-scale) * 0.92rem);
+    font-size: max(0.72rem, calc(var(--sp-scale) * 0.92rem));
     line-height: 1.55;
     opacity: 0.78;
     max-width: 44ch;
