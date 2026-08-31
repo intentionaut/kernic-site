@@ -1,0 +1,91 @@
+---
+/**
+ * Newsletter capture. Posts to the intentionaut.com worker (CORS open), so the
+ * reader never leaves kernic.io. Kernic exists because of the letter; this is
+ * the honest funnel, styled with kernic's own tokens like everything else here.
+ */
+---
+<section class="section subscribe-section" id="newsletter">
+  <div class="container">
+    <div class="subscribe-panel">
+      <div>
+        <h2>Kernic comes out of a newsletter.</h2>
+        <p>
+          Intentionaut is where the build stories land first: what shipped, what
+          went wrong, and what it cost. Roughly weekly, written by a person.
+        </p>
+      </div>
+      <form class="subscribe-form" novalidate>
+        <label class="sr-only" for="nl-email">Email address</label>
+        <input id="nl-email" name="email" type="email" placeholder="your@email.com" autocomplete="email" required />
+        <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button class="btn btn-primary" type="submit">Get the letter</button>
+        <p class="subscribe-note">No spam. Unsubscribe anytime. <a href="https://intentionaut.com/privacy/" target="_blank" rel="noopener noreferrer">Privacy</a>.</p>
+        <p class="subscribe-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.subscribe-form');
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const status = form.querySelector<HTMLElement>('.subscribe-status')!;
+    const button = form.querySelector<HTMLButtonElement>('button')!;
+    const fd = new FormData(form);
+    const email = String(fd.get('email') ?? '').trim();
+    if (!email) { status.textContent = 'Please enter your email address.'; return; }
+    button.disabled = true;
+    try {
+      const res = await fetch('https://contact-form.intentionaut.workers.dev/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, consent: true, source: 'kernic.io', website: fd.get('website') || '', referrer: document.referrer || undefined }),
+      });
+      const result = (await res.json().catch(() => ({}))) as { message?: string; error?: string };
+      if (res.ok) {
+        form.querySelectorAll('input, button').forEach((el) => ((el as HTMLElement).hidden = true));
+        status.textContent = result.message || 'Almost there. Check your inbox.';
+      } else {
+        status.textContent = result.error || 'Something went wrong. Try again in a moment.';
+        button.disabled = false;
+      }
+    } catch {
+      status.textContent = 'Something went wrong. Try again in a moment.';
+      button.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .subscribe-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: var(--space-3);
+    align-items: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3);
+  }
+  .subscribe-panel h2 { margin: 0 0 var(--space-1); }
+  .subscribe-panel p { color: var(--muted-text); margin: 0; }
+  .subscribe-form { display: flex; flex-wrap: wrap; gap: var(--space-1); align-items: center; }
+  .subscribe-form input[type='email'] {
+    flex: 1 1 220px;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--background);
+    color: var(--text);
+    font: inherit;
+  }
+  .subscribe-form input[type='email']:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+  .subscribe-note { flex-basis: 100%; font-size: 0.8rem; color: var(--muted-text); margin: 0; }
+  .subscribe-status { flex-basis: 100%; font-size: 0.9rem; color: var(--color-primary-600); margin: 0; }
+  .subscribe-status:empty { display: none; }
+  .hp { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); }
+  .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); }
+  @media (max-width: 760px) { .subscribe-panel { grid-template-columns: 1fr; } }
+</style>

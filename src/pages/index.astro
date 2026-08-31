@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Terminal from '../components/Terminal.astro';
 import CodeBlock from '../components/CodeBlock.astro';
 import StudioDemo from '../components/StudioDemo.astro';
+import Subscribe from '../components/Subscribe.astro';
 import { readFileSync } from 'node:fs';
 import tokensCss from '../styles/tokens.css?raw';
 import tailwindOut from '../generated/tailwind.css?raw';
@@ -206,6 +207,7 @@ const features = [
         </div>
       </div>
     </section>
+    <Subscribe />
   </main>
 
   <Footer />
