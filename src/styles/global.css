@@ -812,9 +812,15 @@ pre {
     white-space: nowrap;
   }
 
-  /* Terminals and code samples: smaller type, scroll for the rest. */
+  /* Terminals keep their layout and scroll. Code samples wrap instead:
+     a clipped hex value reads as broken, a wrapped one reads as code. */
   .terminal-body {
     font-size: 0.68rem;
     padding: var(--space-1);
+  }
+  .codeblock pre {
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font-size: 0.72rem;
   }
 }

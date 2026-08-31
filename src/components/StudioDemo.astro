@@ -394,6 +394,17 @@ const dataId = `sp-data-${compact ? 'sm' : 'lg'}`;
       overflow-x: auto;
       border-right: 0;
       border-bottom: 1px solid var(--border);
+      /* Fade the clipped edge so it reads as "more", not "broken". */
+      padding-right: var(--space-3);
+      -webkit-mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent);
+      mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent);
+      scrollbar-width: none;
+    }
+    .sp-rail::-webkit-scrollbar {
+      display: none;
+    }
+    .sp-vibe {
+      flex-shrink: 0;
     }
     .sp-vibe {
       white-space: nowrap;
