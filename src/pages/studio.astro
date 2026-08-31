@@ -211,9 +211,12 @@ import CodeBlock from '../components/CodeBlock.astro';
   }
 
   @media (max-width: 720px) {
+    /* Taller on a phone: the app shows a whole website, and a short frame
+       leaves it a sliver. Controls collapse to a strip so most of this is
+       the preview. */
     .studio-embed iframe {
-      height: min(78vh, 640px);
-      min-height: 460px;
+      height: min(88vh, 780px);
+      min-height: 560px;
     }
   }
 
