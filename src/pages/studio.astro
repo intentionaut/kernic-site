@@ -213,6 +213,7 @@ import CodeBlock from '../components/CodeBlock.astro';
   @media (max-width: 720px) {
     .studio-embed iframe {
       height: min(78vh, 640px);
+      min-height: 460px;
     }
   }
 
@@ -255,7 +256,12 @@ import CodeBlock from '../components/CodeBlock.astro';
 
   .studio-embed iframe {
     display: block;
-    width: 100%;
+    /* iOS Safari ignores width on an iframe and sizes it to its content, which
+       dragged the whole page wider than the phone. width:1px + min-width:100%
+       is the long-standing fix: it forces the iframe to take the container's
+       width instead of its content's. */
+    width: 1px;
+    min-width: 100%;
     height: min(78vh, 900px);
     min-height: 620px;
     border: 0;
