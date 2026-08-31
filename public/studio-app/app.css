@@ -641,8 +641,17 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
     padding-right: 16px;
   }
   .pv-hero {
-    padding-top: 34px;
-    padding-bottom: 30px;
+    padding-top: 26px;
+    padding-bottom: 24px;
+  }
+  /* The hero type is sized for a desktop canvas. Left alone it fills the whole
+     phone preview with four words, so you cannot see that it is a website. */
+  .pv-h1 {
+    font-size: calc(var(--text-2xl) * 0.95);
+    margin-bottom: 10px;
+  }
+  .pv-sub {
+    font-size: var(--text-sm);
   }
   .pv-nav {
     flex-wrap: wrap;
