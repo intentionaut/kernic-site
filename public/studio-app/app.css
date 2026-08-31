@@ -597,7 +597,19 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
   #sidebar {
     border-right: 0;
     border-bottom: 1px solid var(--ui-border);
-    max-height: 34vh;
+    max-height: 26vh;
+  }
+  /* Everything that is not the website itself gets out of the way. The ramps
+     are a detail you can read on a desktop; on a phone they cost a third of
+     the preview. */
+  #ramps {
+    display: none;
+  }
+  #previewBar {
+    padding: 8px 12px;
+  }
+  #preview {
+    margin: 8px;
   }
   /* Tighten the strip so more of it is visible before scrolling. */
   .side-head {
@@ -621,9 +633,6 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
   /* The preview renders a mock desktop site. At phone width its padding and
      two-column bands overflow, so tighten them rather than letting the
      content run off the edge. */
-  #preview {
-    margin: 10px;
-  }
   .pv-nav,
   .pv-hero,
   .pv-section,
