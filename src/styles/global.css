@@ -804,6 +804,10 @@ pre {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     gap: var(--space-1);
+    /* Fade the cut edge: a hard clip reads as a bug, a fade reads as "more". */
+    padding-right: 1.5rem;
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 1.5rem), transparent);
+    mask-image: linear-gradient(to right, black calc(100% - 1.5rem), transparent);
   }
   .site-nav::-webkit-scrollbar {
     display: none;

@@ -600,4 +600,40 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
   #looksGrid {
     grid-template-columns: 1fr;
   }
+
+  /* The preview renders a mock desktop site. At phone width its padding and
+     two-column bands overflow, so tighten them rather than letting the
+     content run off the edge. */
+  #preview {
+    margin: 10px;
+  }
+  .pv-nav,
+  .pv-hero,
+  .pv-section,
+  .pv-stats-band {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .pv-hero {
+    padding-top: 34px;
+    padding-bottom: 30px;
+  }
+  .pv-nav {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pv-links {
+    gap: 12px;
+  }
+  .pv-grid-2 {
+    grid-template-columns: 1fr;
+  }
+  .pv-stats-band {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .pv-stat {
+    flex: 1 1 44%;
+    padding-left: 14px;
+  }
 }
