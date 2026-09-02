@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
-import CodeBlock from '../components/CodeBlock.astro';
 ---
 
 <Base
@@ -100,7 +99,7 @@ import CodeBlock from '../components/CodeBlock.astro';
           <h2>Try Studio</h2>
           <p>One command. Your browser opens, the editor loads, you start tweaking.</p>
           <div class="studio-code">
-            <CodeBlock code="npx kernic studio" lang="shell" />
+            <span class="install-pill"><span class="prompt">$</span> npx kernic studio</span>
           </div>
         </div>
       </div>
