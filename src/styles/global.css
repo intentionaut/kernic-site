@@ -428,7 +428,7 @@ svg {
 
 .codeblock pre {
   margin: 0;
-  padding: var(--space-1);
+  padding: 1.75rem 3.5rem var(--space-1) var(--space-1);
   overflow-x: auto;
   font-family: var(--font-mono);
   font-size: var(--text-sm);
