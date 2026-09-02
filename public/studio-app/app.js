@@ -112,6 +112,7 @@ async function refreshPalette() {
     payload.baseSeed = state.baseSeed;
     payload.targetHue = state.hue;
   }
+  payload.motion = (state.meta?.vibes ?? []).find((v) => v.id === state.vibeId)?.motion;
   const result = await api("/api/palette", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -121,6 +122,8 @@ async function refreshPalette() {
   state.ramps = result.colors;
   state.semanticRaw = result.semantic;
   state.gradients = result.gradients;
+  state.shadows = result.shadows ?? null;
+  state.motion = result.motion ?? null;
   renderRamps();
   renderPreview();
 }
@@ -315,6 +318,14 @@ function renderPreview() {
   set("--radius-md", r.md);
   set("--radius-lg", r.lg);
   for (const [k, v] of scaleVars()) set(k, v);
+  const shadows = state.shadows?.[state.mode] ?? {};
+  for (const [level, value] of Object.entries(shadows)) set(`--shadow-${level}`, value);
+  if (state.motion) {
+    for (const [k, v] of Object.entries(state.motion.duration ?? {})) set(`--duration-${k}`, v);
+    set("--ease-out", state.motion.ease?.out);
+    set("--ease-in-out", state.motion.ease?.inOut);
+    set("--ease-emphasized", state.motion.ease?.emphasized);
+  }
 
   const text = `#preview{${decl.join(";")}}`;
   if (text !== pvStyleText) {
@@ -911,6 +922,8 @@ async function init() {
       state.ramps = system.colors;
       state.semanticRaw = system.semantic;
       state.gradients = system.gradients ?? null;
+      state.shadows = body.preview?.shadows ?? null;
+      state.motion = body.preview?.motion ?? null;
       renderRamps();
       renderPreview();
       syncControls();

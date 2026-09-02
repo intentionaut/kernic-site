@@ -11,7 +11,7 @@ const commands: [string, string][] = [
   ['kernic palette <name>', 'Just the swatches'],
   ['kernic studio [name]', 'Local visual editor in your browser'],
   ['kernic export <name> -f <format>', 'Output tokens to stdout'],
-  ['kernic context <name> -o ./', 'Write design.md + W3C tokens.json for agents'],
+  ['kernic context <name> -o ./', 'Write DESIGN.md, W3C tokens.json and shadcn.json into a project'],
   ['kernic apps', 'Every project using a system, and what has fallen behind'],
   ['kernic mcp', 'MCP server for coding tools'],
   ['kernic delete <name>', 'Remove a system'],
@@ -33,8 +33,9 @@ const formats: [string, string][] = [
   ['tailwind', 'Tailwind v4 @theme block'],
   ['json', 'The raw kernic system file'],
   ['fonts', 'Google Fonts @import statements'],
-  ['dtcg', 'W3C DTCG-style design tokens'],
-  ['design-md', 'design.md agent context'],
+  ['dtcg', 'W3C Design Tokens, 2025.10'],
+  ['design-md', 'DESIGN.md, in Google\'s spec, for coding agents'],
+  ['shadcn', 'A shadcn registry:style item for npx shadcn add'],
   ['all', 'Every format, written with -o ./design-system'],
 ];
 ---

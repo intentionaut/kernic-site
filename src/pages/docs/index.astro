@@ -39,7 +39,7 @@ import CodeBlock from '../../components/CodeBlock.astro';
   <p>Every format prints to stdout. Pipe it wherever it belongs:</p>
   <CodeBlock
     lang="shell"
-    code={`# Tailwind v4 app.css\nkernic export midnight-neon -f tailwind > src/app.css\n\n# Plain CSS vars anywhere\nkernic export midnight-neon -f css >> styles/global.css\n\n# Machine-readable tokens for tools\nkernic export midnight-neon -f json > design/tokens.json\n\n# All of them at once\nkernic export midnight-neon -f all -o ./design-system`}
+    code={`# Tailwind v4 app.css\nkernic export midnight-neon -f tailwind > src/app.css\n\n# Plain CSS vars anywhere\nkernic export midnight-neon -f css >> styles/global.css\n\n# W3C design tokens for Terrazzo, Style Dictionary, Figma\nkernic export midnight-neon -f dtcg > design/tokens.json\n\n# DESIGN.md, tokens.json and shadcn.json for your agent and your app\nkernic context midnight-neon -o .\n\n# All of them at once\nkernic export midnight-neon -f all -o ./design-system`}
   />
 
   <h2>Tune it visually or by hand</h2>

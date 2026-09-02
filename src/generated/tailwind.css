@@ -4,6 +4,50 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f0f8fd;
+  --surface: #e3edf2;
+  --foreground: #0e1518;
+  --muted-foreground: #5d6c73;
+  --border-default: #ced9df;
+  --ring: #205cde;
+  --elevation-xs: 0px 1px 2px 0px #0e151814;
+  --elevation-sm: 0px 1px 3px 0px #0e15181a, 0px 1px 2px -1px #0e15181a;
+  --elevation-md: 0px 4px 6px -1px #0e15181a, 0px 2px 4px -2px #0e15181a;
+  --elevation-lg: 0px 10px 15px -3px #0e15181a, 0px 4px 6px -4px #0e15181a;
+  --elevation-xl: 0px 20px 25px -5px #0e15181a, 0px 8px 10px -6px #0e15181a;
+}
+
+.dark {
+  --background: #0e1518;
+  --surface: #1f282c;
+  --foreground: #f0f8fd;
+  --muted-foreground: #96a4ac;
+  --border-default: #323c42;
+  --ring: #205cde;
+  --elevation-xs: 0px 1px 2px 0px #0e151866;
+  --elevation-sm: 0px 1px 3px 0px #0e151873, 0px 1px 2px -1px #0e151873;
+  --elevation-md: 0px 4px 6px -1px #0e151880, 0px 2px 4px -2px #0e151880;
+  --elevation-lg: 0px 10px 15px -3px #0e15188c, 0px 4px 6px -4px #0e15188c;
+  --elevation-xl: 0px 20px 25px -5px #0e151899, 0px 8px 10px -6px #0e151899;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted-foreground);
+  --color-border-default: var(--border-default);
+  --color-ring: var(--ring);
+  --shadow-xs: var(--elevation-xs);
+  --shadow-sm: var(--elevation-sm);
+  --shadow-md: var(--elevation-md);
+  --shadow-lg: var(--elevation-lg);
+  --shadow-xl: var(--elevation-xl);
+}
+
 @theme {
   --color-primary-50: #f3f7ff;
   --color-primary-100: #e1ecff;
@@ -38,11 +82,6 @@
   --color-neutral-800: #323c42;
   --color-neutral-900: #1f282c;
   --color-neutral-950: #0e1518;
-  --color-background: #f0f8fd;
-  --color-surface: #e3edf2;
-  --color-foreground: #0e1518;
-  --color-muted: #5d6c73;
-  --color-border-default: #ced9df;
   --background-image-primary: linear-gradient(120deg, #45ace7 0%, #3a79ff 52%, #0c3185 100%);
   --background-image-mesh: radial-gradient(60% 85% at 12% 8%, #7cc8f755 0%, transparent 60%), radial-gradient(55% 75% at 88% 10%, #e74ea963 0%, transparent 58%), radial-gradient(80% 95% at 55% 96%, #3a79ff40 0%, transparent 62%), linear-gradient(180deg, #1f282c, #0e1518);
   --background-image-text: linear-gradient(92deg, #008dc9 0%, #6e9fff 55%, #e74ea9 100%);
@@ -51,8 +90,63 @@
   --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
+  --text-xs: 0.800rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.894rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1.000rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.250rem;
+  --text-lg--line-height: 1.4;
+  --text-xl: 1.563rem;
+  --text-xl--line-height: 1.3;
+  --text-2xl: 1.953rem;
+  --text-2xl--line-height: 1.25;
+  --text-3xl: 3.052rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 4.768rem;
+  --text-4xl--line-height: 1.1;
+  --text-5xl: 7.451rem;
+  --text-5xl--line-height: 1.05;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.04em;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
   --radius-sm: 0.25rem;
   --radius-md: 0.375rem;
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
+
+  --spacing: 0.25rem;
+  --spacing-1: 1rem;
+  --spacing-2: 2rem;
+  --spacing-3: 3rem;
+  --spacing-4: 4rem;
+  --spacing-6: 6rem;
+  --spacing-8: 8rem;
+  --spacing-12: 12rem;
+  --spacing-16: 16rem;
+  --spacing-0-5: 0.5rem;
+  --spacing-1-5: 1.5rem;
+
+  --duration-fast: 100ms;
+  --duration-base: 180ms;
+  --duration-slow: 280ms;
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1);
+
+  --breakpoint-sm: 40rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 96rem;
+  --container-sm: 40rem;
+  --container-md: 48rem;
+  --container-lg: 64rem;
+  --container-xl: 80rem;
 }

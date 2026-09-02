@@ -16,9 +16,9 @@ import CodeBlock from '../../components/CodeBlock.astro';
   </p>
 
   <h2>The one-command setup</h2>
-  <CodeBlock lang="shell" code={`kernic context midnight-neon -o .   # writes design.md + tokens.json`} />
+  <CodeBlock lang="shell" code={`kernic context midnight-neon -o .   # writes DESIGN.md, tokens.json and shadcn.json`} />
   <p>
-    <code>design.md</code> includes usage rules plus every token. The adjacent
+    <code>DESIGN.md</code> follows Google's DESIGN.md spec: every token in the front matter, usage rules in the prose. The adjacent
     <a href="/docs/tokens">tokens.json</a> is W3C DTCG format, so Figma, Terrazzo, and Style
     Dictionary read it too.
   </p>
@@ -27,7 +27,7 @@ import CodeBlock from '../../components/CodeBlock.astro';
   <p>One line in <code>AGENTS.md</code>, <code>CLAUDE.md</code> or <code>.cursorrules</code>:</p>
   <CodeBlock
     lang="markdown"
-    code={`Visual design: follow ./design.md exactly.\nUse only its tokens. Never invent raw hex values.`}
+    code={`Visual design: follow ./DESIGN.md exactly.\nUse only its tokens. Never invent raw hex values.`}
   />
 
   <h2>Or go live over MCP</h2>

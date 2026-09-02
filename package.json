@@ -6,7 +6,7 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "tokens": "mkdir -p src/generated && kernic export kernic-io -f css > src/styles/tokens.css && kernic export kernic-io -f tailwind > src/generated/tailwind.css && kernic export kernic-io -f json > src/generated/tokens.json",
+    "tokens": "mkdir -p src/generated && kernic export kernic-io -f css > src/styles/tokens.css && kernic export kernic-io -f tailwind > src/generated/tailwind.css && kernic export kernic-io -f dtcg > src/generated/tokens.json && kernic export kernic-io -f shadcn > src/generated/shadcn.json && kernic export kernic-io -f design-md > DESIGN.md",
     "dev": "npm run tokens && astro dev",
     "build": "npm run tokens && astro build",
     "preview": "astro preview",
@@ -14,7 +14,8 @@
     "studio:embed": "node scripts/build-studio-embed.mjs"
   },
   "dependencies": {
-    "astro": "^7.2.7"
+    "astro": "^7.2.7",
+    "kernic": "file:../kernic"
   },
   "allowScripts": {
     "esbuild": true

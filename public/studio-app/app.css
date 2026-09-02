@@ -277,6 +277,8 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
   border-radius: var(--radius-md);
   border: 1px solid transparent;
   cursor: pointer;
+  transition: background var(--duration-fast, 100ms) var(--ease-out, ease-out),
+    border-color var(--duration-fast, 100ms) var(--ease-out, ease-out);
 }
 .pv-btn.pv-sm { padding: 7px 15px; font-size: var(--text-xs); }
 .pv-primary {
@@ -299,7 +301,10 @@ input[type="range"] { width: 100%; accent-color: var(--ui-accent); }
   border-radius: var(--radius-lg);
   padding: 14px;
   position: relative;
+  box-shadow: var(--shadow-sm, none);
+  transition: box-shadow var(--duration-base, 180ms) var(--ease-out, ease-out);
 }
+.pv-card:hover { box-shadow: var(--shadow-md, none); }
 .pv-card h3 { font-family: var(--font-heading); font-size: var(--text-lg); color: var(--pv-text); margin: 10px 0 6px; }
 .pv-card p { font-family: var(--font-body); font-size: var(--text-sm); color: var(--pv-muted-text); line-height: 1.55; }
 .pv-thumb { height: 84px; border-radius: var(--radius-lg); }

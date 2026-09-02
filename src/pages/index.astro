@@ -10,8 +10,9 @@ import { readFileSync } from 'node:fs';
 import tokensCss from '../styles/tokens.css?raw';
 import tailwindOut from '../generated/tailwind.css?raw';
 import jsonOut from '../generated/tokens.json?raw';
+import shadcnOut from '../generated/shadcn.json?raw';
 
-const designMdFull = readFileSync('design.md', 'utf8');
+const designMdFull = readFileSync('DESIGN.md', 'utf8');
 const designMd = designMdFull.split('\n').slice(0, 22).join('\n') + '\n…';
 
 // Honest excerpts from the real generated files.
@@ -35,8 +36,18 @@ const tailwindSample = [
 
 const jsonLines = jsonOut.split('\n');
 const jsonSample = [
-  ...jsonLines.slice(0, 12),
+  ...jsonLines.slice(0, 14),
   '    …',
+  '}',
+].join('\n');
+
+const shadcnLines = shadcnOut.split('\n');
+const lightAt = shadcnLines.findIndex((l) => l.trim() === '"light": {');
+const shadcnSample = [
+  ...shadcnLines.slice(0, 5),
+  '  …',
+  ...shadcnLines.slice(lightAt, lightAt + 9),
+  '      …',
   '}',
 ].join('\n');
 
@@ -59,15 +70,22 @@ const outputs = [
     id: 'json',
     label: 'tokens.json',
     lang: 'tokens.json',
-    note: 'W3C DTCG format. Figma plugins and Style Dictionary read it as-is.',
+    note: 'W3C Design Tokens, 2025.10. Colors as OKLCH with a hex fallback; Terrazzo, Style Dictionary and Figma importers read it as-is.',
     code: jsonSample,
   },
   {
     id: 'design-md',
-    label: 'design.md',
+    label: 'DESIGN.md',
     lang: 'markdown',
-    note: 'A briefing for your AI agent. Every token plus usage rules, in one file.',
+    note: 'Google\'s DESIGN.md spec: every token in the front matter, the rules in the prose. Coding agents already know the file.',
     code: designMd,
+  },
+  {
+    id: 'shadcn',
+    label: 'shadcn.json',
+    lang: 'shadcn.json',
+    note: 'A shadcn registry item. npx shadcn add ./shadcn.json applies the theme, light and dark, and the shadcn MCP server reads it too.',
+    code: shadcnSample,
   },
 ];
 
@@ -81,20 +99,20 @@ const features = [
     body: 'Scales generated in OKLCH, a color space where every step stays evenly bright. No muddy colors.',
   },
   {
-    title: 'Exports that pipe anywhere',
-    body: 'css, tailwind, json, and design.md print to stdout or a file. One command in your build and it stays current.',
+    title: 'Speaks the standards',
+    body: 'DESIGN.md in Google\'s spec, W3C design tokens, a shadcn theme, CSS variables and a Tailwind v4 theme. One command in your build and it stays current.',
   },
   {
     title: 'Your agent stops guessing',
-    body: 'Vibe-coded apps look generic because the agent makes up colors as it goes. Hand it design.md once and it uses your system.',
+    body: 'Vibe-coded apps look generic because the agent makes up colors as it goes. Hand it DESIGN.md once and it uses your system.',
   },
   {
     title: '~2k Google Fonts',
     body: 'Search ~2k Google Fonts from your terminal. Pick heading, body, and mono fonts. Offline fallback included.',
   },
   {
-    title: 'Gradients included',
-    body: 'Gradients for backgrounds, buttons, and headlines. Shipped as tokens in CSS vars and Tailwind utilities.',
+    title: 'The whole token set',
+    body: 'Type scale with line heights, spacing, shadows tinted from your own neutrals, motion, breakpoints and gradients. Every export carries all of it.',
   },
 ];
 ---
