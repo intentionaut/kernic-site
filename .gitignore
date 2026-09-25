@@ -23,3 +23,9 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 .vercel
+# intracor: contains the API key inline (mode 600)
+.mcp.json
+# intracor: local per-commit extraction cache (regenerated; never commit),
+# but keep observability.yaml versioned (the service-to-repo map)
+.intracor/*
+!.intracor/observability.yaml
