@@ -20,3 +20,10 @@ Consult these guides before working on related tasks:
 - [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
 - [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
 - [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+
+## Writing in public
+
+Release notes, pull request titles and descriptions, and comments in this repo
+follow `docs/public-writing.md`. Read it before writing any of them.
+`scripts/public-notes-check.py` runs on every pull request and refuses what it
+can catch.
